@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AccueilController extends AbstractController
 {
-    #[Route('/{_locale}', name: 'app_default')]
+    #[Route('/', name: 'app_default')]
     public function index(): Response
     {
         return $this->render('default/index.html.twig');
