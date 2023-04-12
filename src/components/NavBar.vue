@@ -8,7 +8,7 @@
 		  </a>
 		    <ul class="dropdown-menu">
 			    <li>
-				    <a href="{{ path('app_default') }}">
+				    <a href="{{ path('app_default') }}">²
 					    <i></i>
 					    Accueil
 				    </a>
