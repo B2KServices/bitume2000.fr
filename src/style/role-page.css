@@ -1,0 +1,22 @@
+.category-card {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.role-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+button.active {
+    background-color: green;
+    color: white;
+}

@@ -12,6 +12,7 @@
 import Cookies from 'js-cookie';
 export default {
   name: 'LoginPage',
+  scoped: true,
   data() {
     return {
       pseudo: '',
@@ -41,7 +42,12 @@ export default {
           let date = new Date();
           date.setHours(date.getHours() + 2);
           Cookies.set('token', data.token, { expires: date});
-          this.$router.push('/');
+          const redirectPage = this.$route.query.redirect;
+          if (redirectPage) {
+            this.$router.push(redirectPage);
+          }
+          else
+            this.$router.push('/');
         } else {
           console.error('Erreur d\'authentification');
           this.isLoading = false;
