@@ -118,8 +118,16 @@ export default {
 				this.$router.push('/login?redirect=/role');
 			}
 		},
-
+		roleUpdate(id) {
+			if (this.values[id]) {
+				this.roleDelete(id);
+			} else {
+				this.roleAdd(id);
+			}
+			this.values[id] = !this.values[id];
+		},
 	}
+};
 
 
 </script>
