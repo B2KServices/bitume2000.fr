@@ -89,29 +89,24 @@ export default {
 				this.ownrole = response.data;
 				this.completeValues();
 			} else {
-				this.redirectToAuth();
+				this.$router.push('/login?redirect=/role');
 			}
 		},
 		async fetchCategories() {
 			this.isLoading = true;
-			try {
 				const response = await axios.get('https://api.bitume2000.fr/v2/role/category', {
 					headers: {
 						'Content-Type': 'application/json',
 						'Authorization': `Bearer ${Cookies.get('token')}`
 					}
-				});
-
+				}).catch(
+					this.$router.push('/login?redirect=/role')
+				);
 				if (response.data) {
 					this.categories = response.data;
 				} else {
 					this.$router.push('/login?redirect=/role');
 				}
-			} catch (error) {
-				this.$router.push('/login?redirect=/role');
-			} finally {
-				this.isLoading = false;
-			}
 		}
 	}
 }
