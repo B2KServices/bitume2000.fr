@@ -53,7 +53,7 @@ export default {
             console.log(response);
           })
           .catch(error => {
-            console.log(error);
+						this.$router.push('/login?redirect=/role');
           });
     },
     roleAdd(id)
@@ -70,7 +70,7 @@ export default {
             console.log(response);
           })
           .catch(error => {
-            console.log(error);
+						this.$router.push('/login?redirect=/role');
           });
     },
     roleUpdate(id)
@@ -108,23 +108,14 @@ export default {
         if (response.data) {
           this.categories = response.data;
         } else {
-          this.redirectToAuth();
-					window.stop();
+					this.$router.push('/login?redirect=/role');
         }
       } catch (error) {
-        this.redirectToAuth();
+				this.$router.push('/login?redirect=/role');
       } finally {
         this.isLoading = false;
       }
     },
-    redirectToAuth() {
-      if (confirm('Vous n\'avez pas les permissions nécessaires. Voulez-vous vous authentifier ?')) {
-        this.$router.push('/login?redirect=/role');
-      } else {
-        this.$router.push('/');
-      }
-    }
-  },
 }
 
 
