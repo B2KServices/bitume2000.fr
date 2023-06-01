@@ -87,7 +87,7 @@ export default {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${Cookies.get('token')}`
         }
-      }).catch(() => this.redirectToAuth());
+      })
       if (response.data) {
         this.ownrole = response.data;
         this.completeValues();
@@ -109,6 +109,7 @@ export default {
           this.categories = response.data;
         } else {
           this.redirectToAuth();
+					window.stop();
         }
       } catch (error) {
         this.redirectToAuth();
