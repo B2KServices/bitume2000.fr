@@ -40,51 +40,77 @@ export default {
 			}
 		},
 		roleDelete(id) {
-			axios.delete('https://api.bitume2000.fr/v2/members/role', {
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${Cookies.get('token')}`
-				}, data: {
-					role_id: id,
-				}
-			})
+			axios
+					.delete('https://api.bitume2000.fr/v2/members/role', {
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${Cookies.get('token')}`,
+						},
+						data: {
+							role_id: id,
+						},
+					})
 					.then(response => {
 						console.log(response);
 					})
-					.catch(
-						this.$router.push('/login?redirect=/role')
-					);
+					.catch(() => {
+						this.$router.push('/login?redirect=/role');
+					});
 		},
 		roleAdd(id) {
-			axios.post('https://api.bitume2000.fr/v2/members/role', {
-				role_id: id,
-			}, {
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${Cookies.get('token')}`
-				}
-			})
+			axios
+					.post(
+							'https://api.bitume2000.fr/v2/members/role',
+							{
+								role_id: id,
+							},
+							{
+								headers: {
+									'Content-Type': 'application/json',
+									Authorization: `Bearer ${Cookies.get('token')}`,
+								},
+							}
+					)
 					.then(response => {
 						console.log(response);
 					})
-					.catch(
-						this.$router.push('/login?redirect=/role')
-					);
+					.catch(() => {
+						this.$router.push('/login?redirect=/role');
+					});
 		},
-		roleUpdate(id) {
-			if (this.values[id])
-				this.roleDelete(id);
-			else
-				this.roleAdd(id);
-			this.values[id] = !this.values[id];
+		async fetchCategories() {
+			this.isLoading = true;
+			try {
+				const response = await axios.get(
+						'https://api.bitume2000.fr/v2/role/category',
+						{
+							headers: {
+								'Content-Type': 'application/json',
+								Authorization: `Bearer ${Cookies.get('token')}`,
+							},
+						}
+				);
+				if (response.data) {
+					this.categories = response.data;
+				} else {
+					this.$router.push('/login?redirect=/role');
+				}
+			} catch {
+				this.$router.push('/login?redirect=/role');
+			} finally {
+				this.isLoading = false;
+			}
 		},
 		async fetchUserRole() {
-			const response = await axios.get('https://api.bitume2000.fr/v2/members/role', {
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${Cookies.get('token')}`
-				}
-			})
+			const response = await axios.get(
+					'https://api.bitume2000.fr/v2/members/role',
+					{
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${Cookies.get('token')}`,
+						},
+					}
+			);
 			if (response.data) {
 				this.ownrole = response.data;
 				this.completeValues();
@@ -92,24 +118,8 @@ export default {
 				this.$router.push('/login?redirect=/role');
 			}
 		},
-		async fetchCategories() {
-			this.isLoading = true;
-				const response = await axios.get('https://api.bitume2000.fr/v2/role/category', {
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${Cookies.get('token')}`
-					}
-				}).catch(
-					this.$router.push('/login?redirect=/role')
-				);
-				if (response.data) {
-					this.categories = response.data;
-				} else {
-					this.$router.push('/login?redirect=/role');
-				}
-		}
+
 	}
-}
 
 
 </script>
