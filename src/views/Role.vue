@@ -24,7 +24,8 @@ export default {
 			categories: [],
 			ownrole: [],
 			isLoading: false,
-			values: {}
+			values: {},
+			loginPopupShown: false // Nouvelle variable de données
 		};
 	},
 	mounted() {
@@ -35,7 +36,7 @@ export default {
 		completeValues() {
 			for (const category of this.categories) {
 				for (const role of category.children) {
-					this.values[role.id] = this.ownrole.some(r => r.id === role.id); // Vérifier si l'ID du rôle est présent dans this.ownrole
+					this.values[role.id] = this.ownrole.some(r => r.id === role.id);
 				}
 			}
 		},
@@ -52,10 +53,10 @@ export default {
 					})
 					.then(response => {
 						console.log(response);
+						this.values[id] = false;
 					})
 					.catch(error => {
 						if (error.response && error.response.status === 401) {
-							// Gérer l'erreur 401 ici
 							this.showLoginPopup();
 						} else {
 							console.error(error);
@@ -78,10 +79,10 @@ export default {
 					)
 					.then(response => {
 						console.log(response);
+						this.values[id] = true;
 					})
 					.catch(error => {
 						if (error.response && error.response.status === 401) {
-							// Gérer l'erreur 401 ici
 							this.showLoginPopup();
 						} else {
 							console.error(error);
@@ -107,7 +108,6 @@ export default {
 				}
 			} catch (error) {
 				if (error.response && error.response.status === 401) {
-					// Gérer l'erreur 401 ici
 					this.showLoginPopup();
 				} else {
 					console.error(error);
@@ -135,7 +135,6 @@ export default {
 				}
 			} catch (error) {
 				if (error.response && error.response.status === 401) {
-					// Gérer l'erreur 401 ici
 					this.showLoginPopup();
 				} else {
 					console.error(error);
@@ -148,12 +147,13 @@ export default {
 			} else {
 				this.roleAdd(id);
 			}
-			this.values[id] = !this.values[id];
 		},
 		showLoginPopup() {
-			// Afficher la pop-up ou rediriger vers "/login?redirect=/role"
-			alert("Vous devez vous connecter pour accéder à cette page.");
-			this.$router.push('/login?redirect=/role');
+			if (!this.loginPopupShown) {
+				this.loginPopupShown = true;
+				alert("Vous devez vous connecter pour accéder à cette page.");
+				this.$router.push('/login?redirect=/role');
+			}
 		},
 	}
 };
