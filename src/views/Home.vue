@@ -1,13 +1,20 @@
+
 <template>
-  <Home/>
+  <header>
+    <Nav/>
+  </header>
+  <body>
+    <router-view></router-view>
+  </body>
 </template>
+
 
 <script>
 import Home from '../components/NavBar.vue'
 export default {
   name: 'app',
   components: {
-    Home
+    Nav: Home
   }
 }
 </script>
