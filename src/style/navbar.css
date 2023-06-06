@@ -5,10 +5,9 @@ body {
     font-family: 'Lexend Deca', sans-serif;
 }
 
-.nav
-{
-    position: absolute;
-    width: 100%;
+nav {
+    display: flex;
+    flex-grow: 1;
     height: 169px;
     left: 0;
     top: 0;
@@ -22,40 +21,35 @@ h1
     font-size: 16px;
     line-height: 29px;
     display: flex;
-    align-items: center;
     text-align: center;
-
     color: #000000;
-
 }
 
 .nav-menu {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    flex: 1;
+    position: relative;
     align-items: stretch;
-    position: absolute;
-    width: 100%;
-    height: 167px;
-    left: 180px;
-    border: black solid 1px;
+    padding: 20px;
 }
 
-.menu-category
-{
+.menu-category {
     flex-grow: 2;
-    margin: 10px;
-    position: relative
+    margin: 1% 1% 1% 1%;
+    border: black solid 1px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    display: flex;
+    border-radius: 50px;
+    background: goldenrod;
 }
-.menu-category:first-child
-{
-    margin-left: 10px;
-}
+
 .nav-logo
 {
-    position: absolute;
     width: 180px;
     height: 167px;
-    left: 0px;
-    top: 0px;
     border: black solid 1px;
+    margin: 0 15px 15px 0;
 }

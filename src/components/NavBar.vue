@@ -1,5 +1,4 @@
 <template>
-  <div class="nav">
     <nav>
       <div class="nav-logo">
         <img src="../images/logo.png" alt="logo" width="125">
@@ -24,14 +23,11 @@
           <ul v-if="SocialMenu">
           </ul>
         </div>
-        <div class="menu-category">
-          <a @click="accountMenu=!accountMenu">compte</a>
+          <a @click="accountMenu=!accountMenu"><img src="../images/icons.png" alt="profil" width="130"></a>
           <ul v-if="accountMenu">
           </ul>
-        </div>
       </div>
     </nav>
-  </div>
 </template>
 
 <script setup>

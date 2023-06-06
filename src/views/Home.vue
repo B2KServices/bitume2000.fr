@@ -1,9 +1,7 @@
 
 <template>
-  <header>
-    <Nav/>
-  </header>
   <body>
+    <Nav/>
     <router-view></router-view>
   </body>
 </template>
