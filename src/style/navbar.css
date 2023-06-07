@@ -1,17 +1,17 @@
 body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: 'Lexend Deca', sans-serif;
 }
 
 nav {
     display: flex;
     flex-grow: 1;
-    height: 169px;
+    height: 150px;
     left: 0;
     top: 0;
-    background: #D9D9D9;
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(29,41,253,1) 50%, rgba(69,156,252,1) 100%);
 }
 
 h1
@@ -35,21 +35,55 @@ h1
 }
 
 .menu-category {
-    flex-grow: 2;
-    margin: 1% 1% 1% 1%;
+    background: white;
+    flex: 2;
+    margin: 3% 1% 2% 2%;
+    height: 50%;
     border: black solid 1px;
     justify-content: center;
     align-items: center;
     position: relative;
     display: flex;
     border-radius: 50px;
-    background: goldenrod;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6), 0 4px 4px rgba(0, 0, 0, 0.6);
 }
 
 .nav-logo
 {
     width: 180px;
     height: 167px;
-    border: black solid 1px;
-    margin: 0 15px 15px 0;
+}
+
+.circle_online {
+    position: absolute;
+    top: 120px;
+    right: 40px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 768px) {
+    nav {
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    .menu-category {
+        flex: none;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .nav-logo {
+        margin-bottom: 10px;
+    }
 }

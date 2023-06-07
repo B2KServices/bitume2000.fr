@@ -1,7 +1,7 @@
 <template>
     <nav>
       <div class="nav-logo">
-        <img src="../images/logo.png" alt="logo" width="125">
+        <img src="../images/logo.png" alt="logo" width="150" height="100">
         <h1>{{ actualSeason }}</h1>
       </div>
       <div class="nav-menu">
@@ -24,6 +24,7 @@
           </ul>
         </div>
           <a @click="accountMenu=!accountMenu"><img src="../images/icons.png" alt="profil" width="130"></a>
+          <div class="circle_online" style="background: red"></div>
           <ul v-if="accountMenu">
           </ul>
       </div>
