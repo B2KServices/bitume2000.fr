@@ -1,60 +1,46 @@
 <template>
-    <div class="nav">
-        <nav>
-            <h1>
-                {{ actualSeason }}
-            </h1>
-            <div class="nav-menu">
-                <ul>
-                    <li>
-                        <a>Accueil</a>
-                    </li>
-                    <li>
-                        <a @click="GamesMenu=!GamesMenu">Jeux et Serveurs</a>
-                        <ul v-if="GamesMenu">
-                            <li><a>Jeux</a></li>
-                            <li><a>Serveurs</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a @click="ArtMenu=!ArtMenu">Art</a>
-                        <ul v-if="ArtMenu">
-                            <li><a href="{{ path('app_default') }}">Dessin</a></li>
-                            <li><a href="{{ path('app_default') }}">Musique</a></li>
-                            <li><a href="{{ path('app_default') }}">Vidéo</a></li>
-                            <li><a href="{{ path('app_default') }}">Photo</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a @click="SocialMenu=!SocialMenu">Social</a>
-                        <ul v-if="SocialMenu">
-                            <li><a href="{{ path('app_default') }}">Réseaux sociaux</a></li>
-                            <li><a href="{{ path('app_default') }}">Relation</a></li>
-                            <li><a href="{{ path('app_default') }}">Membres</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a>Autre</a>
-                        <ul>
-                            <li><a href="{{ path('app_default') }}">On Verra</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a @click="accountMenu=!accountMenu"> {{ username }}</a>
-                        <ul v-if="accountMenu">
-                            <li><a href="{{ path('app_default') }}">Mon compte</a></li>
-                            <li><a href="{{ path('app_default') }}">Déconnexion</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+	<nav>
+		<div class="nav-logo">
+			<img src="../images/logo.png" alt="logo" width="150" height="100">
+			<h1>{{ actualSeason }}</h1>
+		</div>
+		<div class="nav-menu">
+			<div class="menu-category" @click="redirection('/')">
+				<a>Accueil</a>
+			</div>
+			<div :class="{'menu-category': !GamesMenu, 'menu-category-active': GamesMenu}" @click="toggleGamesMenu">
+				<a>Jeux et Serveurs</a>
+				<ul v-if="GamesMenu">
+					<a href="/role">Role</a>
+				</ul>
+			</div>
+			<div :class="{'menu-category': !ArtMenu, 'menu-category-active': ArtMenu}" @click="toggleArtMenu">
+				<a>Arts</a>
+				<ul v-if="ArtMenu">
+					<!-- Contenu de la liste des Arts -->
+				</ul>
+			</div>
+			<div :class="{'menu-category': !SocialMenu, 'menu-category-active': SocialMenu}" @click="toggleSocialMenu">
+				<a>réseau social</a>
+				<ul v-if="SocialMenu">
+					<!-- Contenu de la liste des réseaux sociaux -->
+				</ul>
+			</div>
+				<a>
+					<ProfilViz></ProfilViz>
+				</a>
+				<ul v-if="accountMenu">
+					<!-- Contenu du menu du compte -->
+				</ul>
+			</div>
+	</nav>
 </template>
 
 <script setup>
 import axios from "axios";
-import {ref} from "vue";
+import { ref } from "vue";
+import router from "@/router";
+import ProfilViz from "@/components/ProfilViz.vue";
 
 const GamesMenu = ref(false);
 const ArtMenu = ref(false);
@@ -66,51 +52,70 @@ const actualSeason = ref();
 getActualSeason();
 getNameAccount();
 
+function redirection(route) {
+	// Redirection vers la route spécifiée
+	router.push(route);
+}
+
 function getActualSeason() {
-    axios.get('https://api.bitume2000.fr/v2/general/season', {
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-        .then(response => {
-            actualSeason.value = response.data.value;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+	axios
+			.get("https://api.bitume2000.fr/v2/general/season", {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+			.then((response) => {
+				actualSeason.value = response.data.value;
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 }
 
-function hasToken()
-{
-    if (this === undefined)
-        return false;
-    if (this.$cookie === undefined)
-        return false;
-    const token = this.$cookie.get('token');
-    if (token === null) {
-        return false;
-    }
-    return true;
+function hasToken() {
+	if (typeof this === "undefined") return false;
+	if (typeof this.$cookie === "undefined") return false;
+	const token = this.$cookie.get("token");
+	if (token === null) {
+		return false;
+	}
+	return true;
 }
 
-function getNameAccount()
-{
-    if (hasToken() === false)
-    {
-        username.value = "Compte";
-        return;
-    }
-    const token = this.$cookie.get('token');
-    axios
-        .get("https://api.bitume2000.fr/v2/members/id", {
-            authorization: "bearer " + token,
-        })
-        .then(response => {
-            username.value = response.data;
-        })
-        .catch(error => {
-            console.log(error);
-            username.value = "Compte";
-        });
+function getNameAccount() {
+	if (!hasToken()) {
+		username.value = "Compte";
+		return;
+	}
+	const token = this.$cookie.get("token");
+	axios
+			.get("https://api.bitume2000.fr/v2/members/id", {
+				authorization: "bearer " + token,
+			})
+			.then((response) => {
+				username.value = response.data;
+			})
+			.catch((error) => {
+				console.log(error);
+				username.value = "Compte";
+			});
 }
+
+function toggleGamesMenu() {
+	GamesMenu.value = !GamesMenu.value;
+}
+
+function toggleArtMenu() {
+	ArtMenu.value = !ArtMenu.value;
+}
+
+function toggleSocialMenu() {
+	SocialMenu.value = !SocialMenu.value;
+}
+
+
 </script>
+
+<style>
+@import "../style/navbar.css";
+</style>
