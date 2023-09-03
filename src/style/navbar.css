@@ -48,6 +48,20 @@ h1
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6), 0 4px 4px rgba(0, 0, 0, 0.6);
 }
 
+.menu-category-active {
+    background-color: rgb(128, 128, 128);
+    height: 10rem;
+    flex: 2;
+    margin: 3% 1% 2% 2%;
+    border: black solid 1px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    display: flex;
+    border-radius: 50px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6), 0 4px 4px rgba(0, 0, 0, 0.6);
+}
 .nav-logo
 {
     width: 180px;

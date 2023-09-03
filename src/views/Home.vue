@@ -5,17 +5,16 @@
   <div class="body">
     <div class="content">
       <div class="scoreboard">
-        <div class="top_member" style="background: blue">
+        <div class="scoreboard-element">
           <h1>les meilleurs membres</h1>
         </div>
-        <div class="top_squad" style="background: red">
+        <div class="scoreboard-element">
           <h1>la meilleure escouade</h1>
         </div>
       </div>
       <div class="announcement">
 
       </div>
-
     </div>
   </div>
   <footer>
