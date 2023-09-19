@@ -76,10 +76,10 @@ async function admitRole() {
           },
         }
     );
-    feedback.value = response.data; // Assurez-vous que votre réponse contient les données que vous souhaitez afficher.
+    feedback.value = "demande envoyée avec succes"; // Assurez-vous que votre réponse contient les données que vous souhaitez afficher.
     dispfeedback.value = true;
   } catch (e) {
-    feedback.value = e.response.data; // Assurez-vous que votre réponse d'erreur contient les messages d'erreur.
+    feedback.value = e.response.data.message_code; // Assurez-vous que votre réponse d'erreur contient les messages d'erreur.
     console.log('error ' + e);
     dispfeedback.value = true;
   }
