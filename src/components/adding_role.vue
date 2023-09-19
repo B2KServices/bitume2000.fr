@@ -79,11 +79,7 @@ async function admitRole() {
     feedback.value = response.data; // Assurez-vous que votre réponse contient les données que vous souhaitez afficher.
     dispfeedback.value = true;
   } catch (e) {
-    if (e.response && e.response.status === 404) {
-      feedback.value = e.response.data; // Assurez-vous que votre réponse d'erreur contient les messages d'erreur.
-    } else {
-      feedback.value = "Une erreur s'est produite.";
-    }
+    feedback.value = e.response.data; // Assurez-vous que votre réponse d'erreur contient les messages d'erreur.
     console.log('error ' + e);
     dispfeedback.value = true;
   }
