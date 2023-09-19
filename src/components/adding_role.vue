@@ -60,6 +60,7 @@ async function fetchCategories() {
 
 async function admitRole() {
   let response;
+	try {
 		const roleName = input.value;
 		const categoryId = selected.value;
 		 response = await axios.post(
@@ -75,8 +76,12 @@ async function admitRole() {
 					},
 				}
 		);
-		feedback.value = response.data
-    dispfeedback.value = true;
+		feedback.value = "demande envoyée avec succès"
+	} catch (e) {
+    feedback.value = e.data()
+		console.log(e);
+	}
+  dispfeedback.value = true;
 }
 
 function showLoginPopup() {
