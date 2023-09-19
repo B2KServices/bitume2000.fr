@@ -78,8 +78,8 @@ async function admitRole() {
 		);
 		feedback.value = "demande envoyée avec succès"
 	} catch (e) {
-    feedback.value = e.data
-		console.log(e);
+    feedback.value = e.message
+		console.log('error ' + e);
 	}
   dispfeedback.value = true;
 }
