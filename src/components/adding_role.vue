@@ -60,28 +60,33 @@ async function fetchCategories() {
 
 async function admitRole() {
   let response;
-	try {
-		const roleName = input.value;
-		const categoryId = selected.value;
-		 response = await axios.post(
-				'https://api.bitume2000.fr/v2/role/auth',
-				{
-					name: roleName,
-					category: categoryId,
-				},
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${Cookies.get("token")}`,
-					},
-				}
-		);
-		feedback.value = "demande envoyée avec succès"
-	} catch (e) {
-    feedback.value = e.message
-		console.log('error ' + e);
-	}
-  dispfeedback.value = true;
+  try {
+    const roleName = input.value;
+    const categoryId = selected.value;
+    response = await axios.post(
+        'https://api.bitume2000.fr/v2/role/auth',
+        {
+          name: roleName,
+          category: categoryId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+    );
+    feedback.value = response.data; // Assurez-vous que votre réponse contient les données que vous souhaitez afficher.
+    dispfeedback.value = true;
+  } catch (e) {
+    if (e.response && e.response.status === 404) {
+      feedback.value = e.response.data; // Assurez-vous que votre réponse d'erreur contient les messages d'erreur.
+    } else {
+      feedback.value = "Une erreur s'est produite.";
+    }
+    console.log('error ' + e);
+    dispfeedback.value = true;
+  }
 }
 
 function showLoginPopup() {
