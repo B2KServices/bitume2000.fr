@@ -59,10 +59,11 @@ async function fetchCategories() {
 }
 
 async function admitRole() {
+  let response;
 	try {
 		const roleName = input.value;
 		const categoryId = selected.value;
-		const response = await axios.post(
+		 response = await axios.post(
 				'https://api.bitume2000.fr/v2/role/auth',
 				{
 					name: roleName,
@@ -77,7 +78,7 @@ async function admitRole() {
 		);
 		feedback.value = "demande envoyée avec succès"
 	} catch (e) {
-    feedback.value = e.message
+    feedback.value = response.data.message
 		console.log(e);
 	}
   dispfeedback.value = true;
