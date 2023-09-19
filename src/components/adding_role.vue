@@ -9,6 +9,7 @@
 		</select>
 		<!-- Utilisez @click pour déclencher la fonction admitRole lorsque le bouton est cliqué -->
 		<button @click="admitRole">Soumettre</button>
+    <p v-if="dispfeedback">{{feedback}}</p>
 	</div>
 </template>
 
@@ -17,6 +18,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { ref, onMounted } from "vue";
 
+const feedback = ref("");
+const dispfeedback = ref(false)
 const input = ref("");
 const categories = ref([]);
 const selected = ref("");
@@ -72,10 +75,12 @@ async function admitRole() {
 					},
 				}
 		);
-		console.log(response);
+		feedback.value = "demande envoyée avec succès"
 	} catch (e) {
+    feedback.value = e.message
 		console.log(e);
 	}
+  dispfeedback.value = true;
 }
 
 function showLoginPopup() {
