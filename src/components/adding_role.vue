@@ -78,7 +78,7 @@ async function admitRole() {
 		);
 		feedback.value = "demande envoyée avec succès"
 	} catch (e) {
-    feedback.value = e.data()
+    feedback.value = e.data
 		console.log(e);
 	}
   dispfeedback.value = true;
