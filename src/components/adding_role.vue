@@ -63,7 +63,6 @@ async function admitRole() {
   try {
     const roleName = input.value;
     const categoryId = selected.value;
-    // eslint-disable-next-line
     response = await axios.post(
         'https://api.bitume2000.fr/v2/role/auth',
         {
@@ -77,6 +76,7 @@ async function admitRole() {
           },
         }
     );
+		response
     feedback.value = "demande envoyée avec succes"; // Assurez-vous que votre réponse contient les données que vous souhaitez afficher.
     dispfeedback.value = true;
   } catch (e) {
