@@ -40,7 +40,7 @@
 import axios from "axios";
 import { ref } from "vue";
 import router from "@/router";
-import ProfilViz from "@/components/ProfilViz.vue";
+import ProfilViz from "@/components/profil_visualizer.vue";
 
 const GamesMenu = ref(false);
 const ArtMenu = ref(false);

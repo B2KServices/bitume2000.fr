@@ -23,7 +23,7 @@
   </body>
 </template>
 <script>
-import Home from '../components/NavBar.vue'
+import Home from '../components/nav_bar.vue'
 export default {
   name: 'app',
   components: {

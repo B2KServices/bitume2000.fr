@@ -1,5 +1,6 @@
 <template>
-  <NavBar></NavBar>
+  <nav_bar></nav_bar>
+	<adding_role></adding_role>
 	<div>
 		<h1>Role Page</h1>
 		<div v-for="(category, index) in categories" :key="index" class="category-card" :style="{ backgroundColor: category.color }">
@@ -17,11 +18,12 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
-import NavBar from "@/components/NavBar.vue";
+import nav_bar from "@/components/nav_bar.vue";
+import adding_role from "@/components/adding_role.vue";
 
 export default {
 	name: 'RolePage',
-  components: {NavBar},
+  components: {adding_role, nav_bar},
 	data() {
 		return {
 			categories: [],
