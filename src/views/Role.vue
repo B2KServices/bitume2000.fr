@@ -1,18 +1,20 @@
 <template>
   <nav_bar></nav_bar>
-	<adding_role></adding_role>
-	<div>
-		<h1>Role Page</h1>
-		<div v-for="(category, index) in categories" :key="index" class="category-card" :style="{ backgroundColor: category.color }">
-			<h2>{{ category.name }}</h2>
-			<div v-for="(role, roleIndex) in category.children" :key="roleIndex" class="role-item">
-				<span>{{ role.name }}</span>
-				<button @click="roleUpdate(role.id)">
-					{{ values[role.id] ? 'Supprimer' : 'Ajouter'}}
-				</button>
-			</div>
-		</div>
-	</div>
+  <adding_role></adding_role>
+  <div id="role-page">
+    <h1>Page de sélection de roles</h1>
+    <div id="role-categories">
+      <div v-for="(category, index) in categories" :key="index" class="category-card">
+        <h2 :style="{ 'color': '#' + category.color.toString(16) }">{{ category.name }}</h2>
+        <div v-for="(role, roleIndex) in category.children" :key="roleIndex" class="role-item">
+          <span>{{ role.name }}</span>
+          <button @click="roleUpdate(role.id)" :class="values[role.id] ? 'btn-red' : 'btn-green'">
+            {{ values[role.id] ? 'Supprimer' : 'Ajouter'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -63,6 +63,7 @@ async function admitRole() {
   try {
     const roleName = input.value;
     const categoryId = selected.value;
+    // eslint-disable-next-line
     response = await axios.post(
         'https://api.bitume2000.fr/v2/role/auth',
         {
