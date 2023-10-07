@@ -11,7 +11,7 @@ nav {
     left: 0;
     top: 0;
     background: rgb(131,58,180);
-    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(29,41,253,1) 50%, rgba(69,156,252,1) 100%);
+    background: linear-gradient(120deg, rgb(228, 249, 245) 0%, rgb(48, 227, 202) 100%);
 }
 
 h1
