@@ -11,7 +11,7 @@ nav {
     left: 0;
     top: 0;
     background: rgb(131,58,180);
-    background: linear-gradient(120deg, rgb(228, 249, 245) 0%, rgb(48, 227, 202) 100%);
+    background: linear-gradient(180deg, rgb(228, 249, 245) 0%, rgb(48, 227, 202) 100%);
 }
 
 h1
@@ -21,8 +21,9 @@ h1
     font-size: 16px;
     line-height: 29px;
     display: flex;
+    flex-direction: column;
     text-align: center;
-    color: #000000;
+    color: rgb(64, 81, 78);
 }
 
 .nav-menu {
@@ -35,21 +36,29 @@ h1
 }
 
 .menu-category {
-    background: white;
-    flex: 2;
-    margin: 3% 1% 2% 2%;
+    flex : 1 ;
+    background-size: 300%;
+    background-image: linear-gradient(90deg, rgb(41, 204, 209) 0%, rgb(255, 255, 255) 200% );
+    margin: 2% 1% 2% 2%;
     height: 50%;
     border: black solid 1px;
     justify-content: center;
     align-items: center;
+    font-size: small;
     position: relative;
     display: flex;
     border-radius: 50px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6), 0 4px 4px rgba(0, 0, 0, 0.6);
+    user-select: none;
+}
+.menu-category:hover {
+    transition-duration: 1.5s ;
+    background-position: 100%;
+    
 }
 
 .menu-category-active {
-    background-color: rgb(128, 128, 128);
+    background-color: rgb(121, 106, 106);
     height: 10rem;
     flex: 2;
     margin: 3% 1% 2% 2%;
@@ -61,20 +70,23 @@ h1
     display: flex;
     border-radius: 50px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6), 0 4px 4px rgba(0, 0, 0, 0.6);
+    user-select: none;
 }
 .nav-logo
 {
-    width: 180px;
+    width: 130px;
     height: 167px;
+    display : flex;
+    flex-direction: column;
 }
 
 .circle_online {
-    position: absolute;
-    top: 120px;
-    right: 40px;
-    border-radius: 50%;
+    position: relative;
     width: 20px;
+    bottom : 30px;
+    left : 82px;
     height: 20px;
+    border-radius: 50%
 }
 
 @media (max-width: 768px) {
@@ -99,5 +111,7 @@ h1
 
     .nav-logo {
         margin-bottom: 10px;
+        display : flex;
+        flex-direction: column;
     }
 }

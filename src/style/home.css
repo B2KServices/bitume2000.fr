@@ -30,4 +30,5 @@
     display: flex;
     border-radius: 10px;
     padding: 30% 10%;
+    user-select: none;
 }
