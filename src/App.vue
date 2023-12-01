@@ -1,12 +1,7 @@
 <template>
-  <link href='https://fonts.googleapis.com/css?family=Lexend Deca' rel='stylesheet'>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <router-view />
 </template>
 
-<script>
-export default {
-  name: 'App',
-}
+<script setup lang="ts">
+
 </script>
