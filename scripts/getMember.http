@@ -1,0 +1,5 @@
+GET https://api.bitume2000.fr/v2/members/id
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd3aWxob2EiLCJpc0FkbWluIjpmYWxzZSwiaWQiOiIzMTU0MzEzOTI3ODk5MjE3OTMiLCJpYXQiOjE3MDE1MjgxMDUsImV4cCI6MTcwMTUzNTMwNX0.alkXvbDm0-4F3ZQsXKACvxt8yp1X2n1WXKbFWkp-hZg
+
+###

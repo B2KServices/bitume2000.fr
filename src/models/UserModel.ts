@@ -1,6 +1,7 @@
 export interface UserModel {
   id: string;
   name: string;
+  avatar: string | null;
   points: number;
   coins: number;
   title: string;

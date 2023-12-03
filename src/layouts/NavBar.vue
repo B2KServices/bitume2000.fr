@@ -1,7 +1,13 @@
 <template>
   <div>
-    <nav :class="navBar">
+    <nav :class="navBar" v-if="useUserConnectedStore().getUserConnected() == null">
       <a @click="$router.push('/login')">connexion</a>
+    </nav>
+    <nav :class="navBar" v-else>
+      <a @click="$router.push('/profil')">Gérer le compte</a>
+      <a @click="$router.push('/roles')">Gérer les rôles</a>
+      <a @click="$router.push('/achievements')">Voir les achievements</a>
+      <a @click="useUserConnectedStore().disconnect()">Déconnexion</a>
     </nav>
     <nav>
       <img
@@ -36,24 +42,21 @@
         <span>AUTRES</span>
       </a>
       <div class="separator"></div>
-
-      <span>Veuillez vous <br />connecter</span>
-      <img
-        src="icons/profil.svg"
-        height="90"
-        width="150"
-        alt="profil_logo"
-        @click="
+      <span v-if="useUserConnectedStore().getUserConnected() == null">Veuillez vous <br />connecter</span>
+      <span v-else>Bonjour {{useUserConnectedStore().getUserConnected().title}}, {{useUserConnectedStore().getUserConnected()?.name}}</span>
+      <ProfilWidget @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-        "
-      />
+        " :user="useUserConnectedStore().getUserConnected()">
+      </ProfilWidget>
     </nav>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import {useUserConnectedStore} from "stores/useUserConnectedStore";
+import ProfilWidget from "components/ProfilWidget.vue";
 
 const navBar = ref('profil-bar');
 </script>

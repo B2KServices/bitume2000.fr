@@ -32,18 +32,28 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useUserConnectedStore } from 'stores/useUserConnectedStore';
+import {useRouter} from "vue-router";
+import {useQuasar} from "quasar";
 
 const pseudo = ref('');
 const chargement = ref(false);
-
-async function connect(this: any) {
+const $router = useRouter();
+const $q = useQuasar();
+async function connect() {
   chargement.value = true;
-  console.log(pseudo.value);
-  const res = await useUserConnectedStore().getUserToken(pseudo.value, null);
+  const res = await useUserConnectedStore().connect(pseudo.value, null);
   if (res) {
-    this.$router.push('/');
+    await $router.push('/');
+    return;
   }
   chargement.value = false;
+  $q.notify({
+    message: 'Pseudo incorrect',
+    color: 'red',
+    position: 'top-right',
+    icon: 'report_problem',
+    timeout: 2000,
+  });
 }
 </script>
 

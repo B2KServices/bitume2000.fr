@@ -13,10 +13,6 @@ class RestAgent {
     const fullUrl = new URL(route, this.backendAddress);
     return fetch(fullUrl, {
       ...init,
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
     });
   }
 }

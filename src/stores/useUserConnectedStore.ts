@@ -2,18 +2,21 @@ import { Ref, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { UserModel } from 'src/models/UserModel';
 import { useRestAgentStore } from 'stores/restAgentStore';
+import {Cookies} from "quasar";
 
 export const useUserConnectedStore = defineStore('userConnected', () => {
   const userConnected: Ref<UserModel | null> = ref(null);
-  const token: Ref<string | null> = ref(null);
+  // const token: Ref<string | null> = ref(null);
   const setUserConnected = () => {
-    if (token.value === null) {
+    if (!Cookies.has('token')) {
       return;
     }
     useRestAgentStore()
       .restAgent.fetch('members/id', {
+        method: 'GET',
         headers: {
-          Authorization: `Bearer ${token.value}`,
+          Authorization: `Bearer ${Cookies.get('token')}`,
+          Accept: 'application/json',
         },
       })
       .then((response) => {
@@ -21,14 +24,17 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
           response.json().then((data) => {
             userConnected.value = data;
           });
+        } else {
+          Cookies.remove('token');
         }
       });
   };
-  const resetUserConnected = () => {
+  const disconnect = () => {
     userConnected.value = null;
+    Cookies.remove('token');
   };
 
-  const getUserToken = async (username: string, password: string | null) => {
+  const connect = async (username: string, password: string | null) => {
     if (password === null) {
       const response = await useRestAgentStore().restAgent.fetch('auth/login', {
         body: JSON.stringify({
@@ -43,15 +49,22 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
         return false;
       }
       const data = await response.json();
-      token.value = data.token;
+      Cookies.set('token', data.token);
       setUserConnected();
       return true;
     }
   };
+
+  const getUserConnected = () => {
+    if (userConnected.value === null && Cookies.has('token')) {
+      setUserConnected();
+    }
+    return userConnected.value;
+  }
   return {
-    userConnected,
-    setUserConnected,
-    resetUserConnected,
-    getUserToken,
+    getUserConnected,
+    connect,
+    disconnect,
+    getToken: () => Cookies.get('token'),
   };
 });
