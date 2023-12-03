@@ -1,9 +1,9 @@
 <template>
   <div>
-    <nav :class="navBar" v-if="useUserConnectedStore().getUserConnected() == null">
+    <nav v-if="useUserConnectedStore().getUserConnected() == null" :class="navBar">
       <a @click="$router.push('/login')">connexion</a>
     </nav>
-    <nav :class="navBar" v-else>
+    <nav v-else :class="navBar">
       <a @click="$router.push('/profil')">Gérer le compte</a>
       <a @click="$router.push('/roles')">Gérer les rôles</a>
       <a @click="$router.push('/achievements')">Voir les achievements</a>
@@ -11,52 +11,53 @@
     </nav>
     <nav>
       <img
-        src="src/assets/white_logo.svg"
         alt="logo"
         height="120"
+        src="src/assets/white_logo.svg"
         width="180"
       />
       <div class="separator"></div>
       <a>
-        <img src="icons/home.svg" height="30" width="32" alt="home_logo" />
+        <img alt="home_logo" height="30" src="icons/home.svg" width="32"/>
         <span>ACCUEIL</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img src="icons/game.svg" height="30" width="32" alt="game_logo" />
+        <img alt="game_logo" height="30" src="icons/game.svg" width="32"/>
         <span>JEUX ET SERVEUR</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img src="icons/art.svg" height="30" width="32" alt="game_logo" />
+        <img alt="game_logo" height="30" src="icons/art.svg" width="32"/>
         <span>ARTS</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img src="icons/social.svg" height="30" width="32" alt="game_logo" />
+        <img alt="game_logo" height="30" src="icons/social.svg" width="32"/>
         <span>SOCIAL</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img src="icons/other.svg" height="30" width="32" alt="game_logo" />
+        <img alt="game_logo" height="30" src="icons/other.svg" width="32"/>
         <span>AUTRES</span>
       </a>
       <div class="separator"></div>
-      <span v-if="useUserConnectedStore().getUserConnected() == null">Veuillez vous <br />connecter</span>
-      <span v-else>Bonjour {{useUserConnectedStore().getUserConnected().title}}, {{useUserConnectedStore().getUserConnected()?.name}}</span>
-      <ProfilWidget @click="
+      <span v-if="useUserConnectedStore().getUserConnected() == null">Veuillez vous <br/>connecter</span>
+      <span
+        v-else>Bonjour {{ useUserConnectedStore().getUserConnected().title }}, {{ useUserConnectedStore().getUserConnected()?.name }}</span>
+      <ProfilWidget :user="useUserConnectedStore().getUserConnected()" @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-        " :user="useUserConnectedStore().getUserConnected()">
+        ">
       </ProfilWidget>
     </nav>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import {useUserConnectedStore} from "stores/useUserConnectedStore";
-import ProfilWidget from "components/ProfilWidget.vue";
+<script lang="ts" setup>
+import {ref} from 'vue';
+import {useUserConnectedStore} from 'stores/useUserConnectedStore';
+import ProfilWidget from 'components/ProfilWidget.vue';
 
 const navBar = ref('profil-bar');
 </script>

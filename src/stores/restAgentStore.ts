@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
-import { reactive } from 'vue';
+import {defineStore} from 'pinia';
+import {reactive} from 'vue';
 
 class RestAgent {
   backendAddress: URL;
@@ -19,5 +19,5 @@ class RestAgent {
 
 export const useRestAgentStore = defineStore('restAgent', () => {
   const restAgent = reactive(new RestAgent());
-  return { restAgent };
+  return {restAgent};
 });

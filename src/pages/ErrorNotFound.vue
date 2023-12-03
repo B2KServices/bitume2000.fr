@@ -12,16 +12,16 @@
       <q-btn
         class="q-mt-xl"
         color="white"
-        text-color="blue"
-        unelevated
-        to="/"
         label="Go Home"
         no-caps
+        text-color="blue"
+        to="/"
+        unelevated
       />
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 
 </script>

@@ -1,8 +1,8 @@
-import { Ref, ref } from 'vue';
-import { defineStore } from 'pinia';
-import { UserModel } from 'src/models/UserModel';
-import { useRestAgentStore } from 'stores/restAgentStore';
-import {Cookies} from "quasar";
+import {Ref, ref} from 'vue';
+import {defineStore} from 'pinia';
+import {UserModel} from 'src/models/UserModel';
+import {useRestAgentStore} from 'stores/restAgentStore';
+import {Cookies} from 'quasar';
 
 export const useUserConnectedStore = defineStore('userConnected', () => {
   const userConnected: Ref<UserModel | null> = ref(null);
@@ -13,12 +13,12 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
     }
     useRestAgentStore()
       .restAgent.fetch('members/id', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`,
-          Accept: 'application/json',
-        },
-      })
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+        Accept: 'application/json',
+      },
+    })
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {

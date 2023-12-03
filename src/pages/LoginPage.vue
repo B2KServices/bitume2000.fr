@@ -4,41 +4,42 @@
       <h1>Authentification</h1>
 
       <q-input
-        rounded
-        outlined
-        label="Pseudo"
-        type="search"
-        dense
-        class="input"
         v-model="pseudo"
+        class="input"
+        dense
+        label="Pseudo"
+        outlined
+        rounded
+        type="search"
       />
     </div>
     <div class="submit">
       <q-btn
-        unelevated
-        rounded
-        label="Connexion"
-        type="submit"
-        size="XL"
         :loading="chargement"
         class="connect"
+        label="Connexion"
+        rounded
+        size="XL"
+        type="submit"
+        unelevated
         @click="connect"
       />
-      <q-btn round icon="password" class="switch" :disable="true"></q-btn>
+      <q-btn :disable="true" class="switch" icon="password" round></q-btn>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { useUserConnectedStore } from 'stores/useUserConnectedStore';
-import {useRouter} from "vue-router";
-import {useQuasar} from "quasar";
+<script lang="ts" setup>
+import {ref} from 'vue';
+import {useUserConnectedStore} from 'stores/useUserConnectedStore';
+import {useRouter} from 'vue-router';
+import {useQuasar} from 'quasar';
 
 const pseudo = ref('');
 const chargement = ref(false);
 const $router = useRouter();
 const $q = useQuasar();
+
 async function connect() {
   chargement.value = true;
   const res = await useUserConnectedStore().connect(pseudo.value, null);
