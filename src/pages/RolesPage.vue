@@ -21,7 +21,6 @@
         <q-card-section>
           <div class="text-h6">Proposer un role</div>
         </q-card-section>
-
         <q-card-section class="q-pt-none">
           <q-input dense v-model="rolename" autofocus ></q-input>
           <q-select v-model="selectedCategories" :options="categoriesOptions" label="Standard"></q-select>
@@ -188,6 +187,7 @@ function roleUpdate(id: string) {
   margin-left: 5%;
   margin-right: 5%;
   height: 100%;
+  margin-top: 50px;
 }
 
 #role-page h1 {

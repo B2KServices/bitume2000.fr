@@ -13,7 +13,7 @@
       <img
         alt="logo"
         height="120"
-        src="src/assets/white_logo.svg"
+        src="logos/white_logo.svg"
         width="180"
       />
       <div class="separator"></div>
