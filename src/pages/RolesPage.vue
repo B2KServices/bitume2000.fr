@@ -2,16 +2,16 @@
   <div>
     <q-dialog v-model="persistent" persistent transition-show="scale" transition-hide="scale">
       <q-card class="bg-teal text-white" style="width: 300px">
-        <q-card-section>
+        <q-card-section class="disconnect-msg">
           <div class="text-h6">Déconnecté !</div>
         </q-card-section>
 
-        <q-card-section>
+        <q-card-section class="disconnect-msg">
           <span>vous avez besoin d'etre connecté pour acceder a cette page</span>
         </q-card-section>
 
-        <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn flat label="OK" v-close-popup @click="$router.push('/login?dir=/roles')"></q-btn>
+        <q-card-actions align="right" class="bg-white">
+          <q-btn class="ok-btn" flat label="OK" v-close-popup @click="$router.push('/login?dir=/roles')"></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -32,13 +32,9 @@
       </q-card>
     </q-dialog>
     <nav-bar/>
-
+    <q-btn class="ok-btn" round icon="add" @click="addRolePopup = true"/>
     <div id="role-page">
-      <q-btn>
-        <q-icon name="add" />
-        <span @click="addRolePopup = true">Proposer un role</span>
-      </q-btn>
-      <h1>Page de sélection de roles</h1>
+      <h1>Choisissez vos roles</h1>
 
       <div id="role-categories">
         <div v-for="(category, index) in categories" :key="index" class="category-card">
@@ -46,9 +42,7 @@
 
           <div v-for="(role, roleIndex) in category.children" :key="roleIndex" class="role-item">
             <span>{{ role.name }}</span>
-            <button :class="state.get(role.id) ? 'btn-red' : 'btn-green'" @click="roleUpdate(role.id)">
-              {{ state.get(role.id) ? 'Supprimer' : 'Ajouter' }}
-            </button>
+            <q-toggle v-model="state[role.id]" @input="roleUpdate(role.id)"/>
           </div>
         </div>
       </div>
@@ -57,14 +51,14 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, Ref} from 'vue';
 import {useRestAgentStore} from 'stores/restAgentStore';
 import {useUserConnectedStore} from 'stores/useUserConnectedStore';
 import {RoleCategoryModel} from 'src/models/RoleCategoryModel';
 import NavBar from 'layouts/NavBar.vue';
 
 const categories = ref<RoleCategoryModel[]>([]);
-const state = ref<Map<string, boolean>>(new Map());
+const state = ref<Record<string, Ref<boolean>>>({});
 const persistent = ref(false);
 const addRolePopup = ref(false);
 const rolename = ref('');
@@ -122,7 +116,7 @@ function setCategories() {
          categoriesOptions.value.push(category.name);
           categoriesId.value.push(category.id);
         for (const role of category.children) {
-          state.value.set(role.id, false);
+          state.value[role.id] = ref(false);
         }
       }
 
@@ -150,7 +144,7 @@ function getOwnRoles() {
       const roles = JSON.parse(data);
 
       for (const role of roles) {
-        state.value.set(role.id, true);
+        state.value[role.id] = ref(true);
       }
     })
     .catch((err) => {
@@ -159,7 +153,7 @@ function getOwnRoles() {
 }
 
 function roleUpdate(id: string) {
-  const currentStatus = state.value.get(id) || false;
+  const currentStatus = state.value[id] || false;
   const method = currentStatus ? 'DELETE' : 'POST';
 
   useRestAgentStore()
@@ -174,7 +168,7 @@ function roleUpdate(id: string) {
     }
   })
     .then(() => {
-      state.value.set(id, !currentStatus);
+      state.value[id] = ref(!currentStatus);
     })
     .catch((err) => {
       console.error(err);
@@ -183,11 +177,27 @@ function roleUpdate(id: string) {
 </script>
 
 <style lang="scss" scoped>
+
+html {
+  background-color: #00bcd4;
+}
+
+.ok-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: $primary;
+  border-radius: 100%;
+}
+
+
+.disconnect-msg {
+  padding-top: 20px;
+  background: $secondary;
+}
+
 #role-page {
-  margin-left: 5%;
-  margin-right: 5%;
   height: 100%;
-  margin-top: 50px;
 }
 
 #role-page h1 {

@@ -14,10 +14,10 @@
         alt="logo"
         height="120"
         src="logos/white_logo.svg"
-        width="180"
+        width="120"
       />
       <div class="separator"></div>
-      <a>
+      <a @click="$router.push('/')">
         <img alt="home_logo" height="30" src="icons/home.svg" width="32"/>
         <span>ACCUEIL</span>
       </a>
@@ -28,17 +28,17 @@
       </a>
       <div class="separator"></div>
       <a>
-        <img alt="game_logo" height="30" src="icons/art.svg" width="32"/>
+        <img alt="art_logo" height="30" src="icons/art.svg" width="32"/>
         <span>ARTS</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img alt="game_logo" height="30" src="icons/social.svg" width="32"/>
+        <img alt="social_logo" height="30" src="icons/social.svg" width="32"/>
         <span>SOCIAL</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img alt="game_logo" height="30" src="icons/other.svg" width="32"/>
+        <img alt="other_logo" height="30" src="icons/other.svg" width="32"/>
         <span>AUTRES</span>
       </a>
       <div class="separator"></div>
@@ -139,6 +139,7 @@ nav {
 
   a:hover {
     background: $dark;
+    cursor: pointer;
   }
 
   @media (max-width: 1200px) {

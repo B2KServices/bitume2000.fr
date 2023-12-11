@@ -21,10 +21,15 @@ const {user}: { user?: UserModel | null } = defineProps(['user']);
   height: 100px;
 }
 
+.circle-container:hover {
+  cursor: pointer;
+}
+
 .profil {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 50%; /* Rendre l'image circulaire */
+  border-radius: 50%;
+  margin-left: 10px;
 }
 </style>
