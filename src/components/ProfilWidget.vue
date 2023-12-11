@@ -1,35 +1,49 @@
 <script lang="ts" setup>
-import {defineProps} from 'vue';
-import {UserModel} from 'src/models/UserModel';
+import { defineProps } from 'vue';
+import { UserModel } from 'src/models/UserModel';
 
-const {user}: { user?: UserModel | null } = defineProps(['user']);
+const { user }: { user?: UserModel | null } = defineProps(['user']);
 </script>
 
 <template>
-  <div class="circle-container">
+  <div v-if="user != null"
+       :style="{ 'background-color': '#' + user?.squad.color }">
+    <div>
+      <img
+        :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
+        alt="profil_logo"
+      />
+    </div>
+  </div>
+  <div v-else>
     <img
-      :src="user == null || user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
+      :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
       alt="profil_logo"
-      class="profil"
     />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.circle-container {
-  width: 100px;
-  height: 100px;
-}
 
-.circle-container:hover {
-  cursor: pointer;
-}
 
-.profil {
-  width: 100%;
-  height: auto;
-  display: block;
+div {
+  padding: 2px;
+  display: flex; /* Ajout de display: flex; pour activer le modèle de boîte flexible */
+  align-items: center;
+  justify-content: center; /* Centrage horizontal de la deuxième div */
   border-radius: 50%;
-  margin-left: 10px;
+
+  div {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 50%;
+    }
+  }
 }
 </style>

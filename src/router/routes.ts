@@ -15,6 +15,11 @@ const routes: RouteRecordRaw[] = [
     // component: () => import('layouts/NavBar.vue'),
     children: [{ path: '', component: () => import('pages/RolesPage.vue') }]
   },
+  {
+    path: '/profil',
+    // component: () => import('layouts/NavBar.vue'),
+    children: [{ path: '', component: () => import('pages/ProfilPage.vue') }]
+  },
 
 
   // Always leave this as last one,
