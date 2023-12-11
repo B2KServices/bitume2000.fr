@@ -1,6 +1,6 @@
-# Bitume2000 (bitume2000-fr)
+# Bitume2000
 
-oui
+<img src="public/logos/logo_1.svg" width="150">
 
 ## Install the dependencies
 
