@@ -22,7 +22,7 @@
           <div class="text-h6">Proposer un role</div>
         </q-card-section>
         <q-card-section class="q-pt-none">
-          <q-input dense v-model="rolename" autofocus ></q-input>
+          <q-input dense v-model="rolename" autofocus></q-input>
           <q-select v-model="selectedCategories" :options="categoriesOptions" label="Standard"></q-select>
         </q-card-section>
         <q-card-actions align="right" class="text-primary">
@@ -39,7 +39,6 @@
       <div id="role-categories">
         <div v-for="(category, index) in categories" :key="index" class="category-card">
           <h2 :style="{ 'color': '#' + category.color}">{{ category.name }}</h2>
-
           <div v-for="(role, roleIndex) in category.children" :key="roleIndex" class="role-item">
             <span>{{ role.name }}</span>
             <q-toggle v-model="state[role.id]" @input="roleUpdate(role.id)"/>
@@ -113,8 +112,8 @@ function setCategories() {
       categories.value = JSON.parse(data);
 
       for (const category of categories.value) {
-         categoriesOptions.value.push(category.name);
-          categoriesId.value.push(category.id);
+        categoriesOptions.value.push(category.name);
+        categoriesId.value.push(category.id);
         for (const role of category.children) {
           state.value[role.id] = ref(false);
         }
@@ -178,9 +177,6 @@ function roleUpdate(id: string) {
 
 <style lang="scss" scoped>
 
-html {
-  background-color: #00bcd4;
-}
 
 .ok-btn {
   position: fixed;
@@ -197,7 +193,10 @@ html {
 }
 
 #role-page {
+  margin-left: 5%;
+  margin-right: 5%;
   height: 100%;
+  margin-top: 50px;
 }
 
 #role-page h1 {
