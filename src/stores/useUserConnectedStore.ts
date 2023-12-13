@@ -1,8 +1,8 @@
-import {Ref, ref} from 'vue';
-import {defineStore} from 'pinia';
-import {UserModel} from 'src/models/UserModel';
-import {useRestAgentStore} from 'stores/restAgentStore';
-import {Cookies} from 'quasar';
+import { Ref, ref } from 'vue';
+import { defineStore } from 'pinia';
+import { UserModel } from 'src/models/UserModel';
+import { useRestAgentStore } from 'stores/restAgentStore';
+import { Cookies } from 'quasar';
 
 export const useUserConnectedStore = defineStore('userConnected', () => {
   const userConnected: Ref<UserModel | null> = ref(null);
@@ -16,12 +16,13 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${Cookies.get('token')}`,
-        Accept: 'application/json',
-      },
+        Accept: 'application/json'
+      }
     })
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
+            console.log(data);
             userConnected.value = data;
           });
         } else {
@@ -38,12 +39,12 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
     if (password === null) {
       const response = await useRestAgentStore().restAgent.fetch('auth/login', {
         body: JSON.stringify({
-          username: username,
+          username: username
         }),
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        method: 'POST',
+        method: 'POST'
       });
       if (!response.ok) {
         return false;
@@ -60,11 +61,11 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
       setUserConnected();
     }
     return userConnected.value;
-  }
+  };
   return {
     getUserConnected,
     connect,
     disconnect,
-    getToken: () => Cookies.get('token'),
+    getToken: () => Cookies.get('token')
   };
 });
