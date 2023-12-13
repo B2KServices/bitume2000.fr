@@ -18,45 +18,46 @@
       />
       <div class="separator"></div>
       <a @click="$router.push('/')">
-        <img alt="home_logo" height="30" src="icons/home.svg" width="32"/>
+        <img alt="home_logo" height="30" src="icons/home.svg" width="32" />
         <span>ACCUEIL</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img alt="game_logo" height="30" src="icons/game.svg" width="32"/>
+        <img alt="game_logo" height="30" src="icons/game.svg" width="32" />
         <span>JEUX ET SERVEUR</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img alt="art_logo" height="30" src="icons/art.svg" width="32"/>
+        <img alt="art_logo" height="30" src="icons/art.svg" width="32" />
         <span>ARTS</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img alt="social_logo" height="30" src="icons/social.svg" width="32"/>
+        <img alt="social_logo" height="30" src="icons/social.svg" width="32" />
         <span>SOCIAL</span>
       </a>
       <div class="separator"></div>
       <a>
-        <img alt="other_logo" height="30" src="icons/other.svg" width="32"/>
+        <img alt="other_logo" height="30" src="icons/other.svg" width="32" />
         <span>AUTRES</span>
       </a>
       <div class="separator"></div>
-      <span v-if="useUserConnectedStore().getUserConnected() == null">Veuillez vous <br/>connecter</span>
+      <span v-if="useUserConnectedStore().getUserConnected() == null">Veuillez vous <br />connecter</span>
       <span
-        v-else>Bonjour {{ useUserConnectedStore().getUserConnected().title }}, {{ useUserConnectedStore().getUserConnected()?.name }}</span>
+        v-else>Bonjour {{ useUserConnectedStore().getUserConnected().title
+        }}, {{ useUserConnectedStore().getUserConnected()?.name }}</span>
       <ProfilWidget :user="useUserConnectedStore().getUserConnected()" @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-        ">
+        " class="profil-widget">
       </ProfilWidget>
     </nav>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue';
-import {useUserConnectedStore} from 'stores/useUserConnectedStore';
+import { ref } from 'vue';
+import { useUserConnectedStore } from 'stores/useUserConnectedStore';
 import ProfilWidget from 'components/ProfilWidget.vue';
 
 const navBar = ref('profil-bar');
@@ -65,6 +66,10 @@ const navBar = ref('profil-bar');
 <style lang="scss" scoped>
 div {
   position: relative;
+}
+
+.profil-widget:hover {
+  cursor: pointer;
 }
 
 .profil-bar {

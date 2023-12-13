@@ -27,10 +27,10 @@ const { user }: { user?: UserModel | null } = defineProps(['user']);
 
 
 div {
-  padding: 2px;
-  display: flex; /* Ajout de display: flex; pour activer le modèle de boîte flexible */
+  margin: 10px;
+  display: flex;
   align-items: center;
-  justify-content: center; /* Centrage horizontal de la deuxième div */
+  justify-content: center;
   border-radius: 50%;
 
   div {

@@ -31,8 +31,8 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-    <nav-bar/>
-    <q-btn class="ok-btn" round icon="add" @click="addRolePopup = true"/>
+    <nav-bar />
+    <q-btn class="ok-btn add-role" round icon="add" @click="addRolePopup = true" />
     <div id="role-page">
       <h1>Choisissez vos roles</h1>
 
@@ -41,7 +41,7 @@
           <h2 :style="{ 'color': '#' + category.color}">{{ category.name }}</h2>
           <div v-for="(role, roleIndex) in category.children" :key="roleIndex" class="role-item">
             <span>{{ role.name }}</span>
-            <q-toggle v-model="state[role.id]" @input="roleUpdate(role.id)"/>
+            <q-toggle v-model="state[role.id]" @input="roleUpdate(role.id)" />
           </div>
         </div>
       </div>
@@ -50,10 +50,10 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, ref, Ref} from 'vue';
-import {useRestAgentStore} from 'stores/restAgentStore';
-import {useUserConnectedStore} from 'stores/useUserConnectedStore';
-import {RoleCategoryModel} from 'src/models/RoleCategoryModel';
+import { onMounted, ref, Ref } from 'vue';
+import { useRestAgentStore } from 'stores/restAgentStore';
+import { useUserConnectedStore } from 'stores/useUserConnectedStore';
+import { RoleCategoryModel } from 'src/models/RoleCategoryModel';
 import NavBar from 'layouts/NavBar.vue';
 
 const categories = ref<RoleCategoryModel[]>([]);
@@ -178,12 +178,18 @@ function roleUpdate(id: string) {
 <style lang="scss" scoped>
 
 
-.ok-btn {
+.add-role {
   position: fixed;
   bottom: 20px;
   right: 20px;
   background-color: $primary;
   border-radius: 100%;
+  z-index: 1000;
+}
+
+.ok-btn {
+  background-color: $primary;
+  color: $light;
 }
 
 
