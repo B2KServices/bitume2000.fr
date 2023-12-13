@@ -250,8 +250,10 @@ h2 {
 
 #role-categories {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   row-gap: 3%;
+  column-gap: 3%;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-auto-rows: 1fr;
 }
 
 .category-card {
