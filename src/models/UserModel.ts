@@ -1,3 +1,5 @@
+import { SquadModel } from 'src/models/SquadModel';
+
 export interface UserModel {
   id: string;
   name: string;
@@ -12,10 +14,3 @@ export interface UserModel {
   squad: SquadModel;
 }
 
-export interface SquadModel {
-  id: string;
-  name: string;
-  PointsTotal: number;
-  PointsGiven: number;
-  color: string;
-}

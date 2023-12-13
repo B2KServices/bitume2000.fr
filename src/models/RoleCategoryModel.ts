@@ -1,3 +1,5 @@
+import { RoleModel } from 'src/models/RoleModel';
+
 export interface RoleCategoryModel {
   id: string;
   name: string;
@@ -5,8 +7,4 @@ export interface RoleCategoryModel {
   children: RoleModel[];
 }
 
-export interface RoleModel {
-  id: string;
-  name: string;
-  // category: RoleCategoryModel;
-}
+
