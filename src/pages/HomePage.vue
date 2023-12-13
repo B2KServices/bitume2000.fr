@@ -6,8 +6,9 @@
       <h1>Joyeux noel</h1>
       <h1>l'équipe en tete est : {{ squads[0].name }}</h1>
       <div class="snowflakes" v-if="isDecember">
-        <div v-for="(flake, index) in flakes" :key="index" class="snowflake"
-             :style="{ top: flake.top + 'vh', left: flake.left + 'vw', animationDelay: flake.delay + 's' }"></div>
+        <img v-for="(flake, index) in flakes" :key="index" class="snowflake"
+             :style="{ top: flake.top + 'vh', left: flake.left + 'vw', animationDelay: flake.delay + 's' }"
+             src="icons/flocon.svg" />
       </div>
     </div>
   </div>
@@ -95,8 +96,6 @@ h1 {
   position: absolute;
   width: 10px;
   height: 10px;
-  background-color: #7e7d7d;
-  border-radius: 50%;
   opacity: 0.7;
   animation: snowflake-fall 10s linear infinite;
   animation-iteration-count: infinite;
