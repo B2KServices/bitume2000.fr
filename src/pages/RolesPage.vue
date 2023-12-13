@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="role-page">
     <q-dialog v-model="persistent" persistent transition-show="scale" transition-hide="scale">
       <q-card class="bg-teal text-white" style="width: 300px">
         <q-card-section class="disconnect-msg">
@@ -37,11 +37,15 @@
       <h1>Choisissez vos roles</h1>
 
       <div id="role-categories">
-        <div v-for="(category, index) in categories" :key="index" class="category-card">
-          <h2 :style="{ 'color': '#' + category.color}">{{ category.name }}</h2>
-          <div v-for="(role, roleIndex) in category.children" :key="roleIndex" class="role-item">
+        <div v-for="(category, index) in categories" :key="index" class="category-card"
+             :style="{ 'background-color': '#' + category.color}">
+          <h2 :style="{ 'color': '#'+ darkenColor(category.color)}">{{ category.name }}</h2>
+          <div v-for="(role, roleIndex) in category.children" :key="roleIndex" class="role-item"
+               @click="roleUpdate(role.id)"
+          >
             <span>{{ role.name }}</span>
-            <q-toggle v-model="state[role.id]" @input="roleUpdate(role.id)" />
+            <q-toggle v-model="state[role.id]" @input="roleUpdate(role.id)" keep-color
+                      :style="{ 'color': '#' + darkenColor(category.color)}" />
           </div>
         </div>
       </div>
@@ -68,6 +72,19 @@ const categoriesId = ref<string[]>([]);
 onMounted(() => {
   setCategories();
 });
+
+function darkenColor(hexCode: string) {
+  const hex = hexCode;
+  const rgb = [
+    parseInt(hex.slice(0, 2), 16),
+    parseInt(hex.slice(2, 4), 16),
+    parseInt(hex.slice(4, 6), 16)
+  ];
+
+  const darkenedRgb = rgb.map(component => Math.round(component * 0.5));
+
+  return darkenedRgb.map(component => component.toString(16).padStart(2, '0')).join('');
+}
 
 function SubmitRole() {
   const index = categoriesOptions.value.indexOf(selectedCategories.value);
@@ -177,6 +194,18 @@ function roleUpdate(id: string) {
 
 <style lang="scss" scoped>
 
+h2 {
+  font-size: 2vw;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.role-page {
+  background-color: $light;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
 
 .add-role {
   position: fixed;
@@ -220,17 +249,12 @@ function roleUpdate(id: string) {
 }
 
 .category-card {
-  margin-bottom: 20px;
   padding: 5%;
+  border-radius: 30px;
+  box-shadow: $dark 0px 0px 10px 0px;
+  margin: 0 5%;
 }
 
-.category-card:nth-child(3n - 1) {
-  border-left: black 2px solid;
-}
-
-.category-card:nth-child(3n) {
-  border-left: black 2px solid;
-}
 
 .category-card h2 {
   text-align: center;
@@ -253,7 +277,8 @@ span {
 }
 
 .role-item:hover {
-  background-color: aliceblue;
+  background-color: $light;
+  cursor: pointer
 }
 
 button {
@@ -263,9 +288,6 @@ button {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6), 0 4px 4px rgba(0, 0, 0, 0.6);
 }
 
-button:hover {
-  cursor: pointer;
-}
 
 .btn-red {
   background-color: rgba(255, 0, 0, 0.3);
