@@ -44,7 +44,7 @@
                @click="roleUpdate(role.id)"
           >
             <span>{{ role.name }}</span>
-            <q-toggle v-model="state[role.id]" @input="roleUpdate(role.id)" keep-color
+            <q-toggle v-model="state[role.id]" keep-color @update:model-value="roleUpdate(role.id, true)"
                       :style="{ 'color': '#' + darkenColor(category.color)}" />
           </div>
         </div>
@@ -168,9 +168,12 @@ function getOwnRoles() {
     });
 }
 
-function roleUpdate(id: string) {
+function roleUpdate(id: string, invert = false) {
   const currentStatus = state.value[id] || false;
-  const method = currentStatus ? 'DELETE' : 'POST';
+  let method = currentStatus ? 'DELETE' : 'POST';
+  if (invert) {
+    method = currentStatus ? 'POST' : 'DELETE';
+  }
 
   useRestAgentStore()
     .restAgent.fetch('members/role', {
@@ -184,6 +187,9 @@ function roleUpdate(id: string) {
     }
   })
     .then(() => {
+      if (invert) {
+        return;
+      }
       state.value[id] = ref(!currentStatus);
     })
     .catch((err) => {
