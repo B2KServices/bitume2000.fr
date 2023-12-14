@@ -117,7 +117,7 @@ nav {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   position: sticky;
   border-radius: 0 0 30px 30px;
-  width: 100vw;
+  width: 100%;
 
   .separator {
     flex-shrink: 0;

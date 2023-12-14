@@ -174,10 +174,9 @@ function roleUpdate(id: string, invert = false) {
   if (invert) {
     method = currentStatus ? 'POST' : 'DELETE';
   }
-  if (invert) {
-    return;
+  else {
+    state.value[id] = ref(!currentStatus);
   }
-  state.value[id] = ref(!currentStatus);
 
   useRestAgentStore()
     .restAgent.fetch('members/role', {
@@ -190,9 +189,6 @@ function roleUpdate(id: string, invert = false) {
       Authorization: `Bearer ${useUserConnectedStore().getToken()}`
     }
   })
-    .then(() => {
-      console.log('ok');
-    })
     .catch((err) => {
       console.error(err);
       state.value[id] = ref(!currentStatus);
@@ -203,6 +199,8 @@ function roleUpdate(id: string, invert = false) {
 <style lang="scss" scoped>
 
 h1 {
+  padding-top: 50px;
+  padding-bottom: 50px;
   font-size: 3vw;
   font-weight: bold;
   margin-bottom: 20px;
@@ -224,8 +222,8 @@ h2 {
 
 .add-role {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 25px;
+  right: 25px;
   background-color: $primary;
   border-radius: 100%;
   z-index: 1000;
@@ -242,20 +240,6 @@ h2 {
   background: $secondary;
 }
 
-#role-page {
-  margin-left: 5%;
-  margin-right: 5%;
-  height: 100%;
-  margin-top: 50px;
-}
-
-#role-page h1 {
-  display: block;
-  font-size: 2rem;
-  font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 40px;
-}
 
 #role-categories {
   display: grid;
@@ -305,16 +289,4 @@ button {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6), 0 4px 4px rgba(0, 0, 0, 0.6);
 }
 
-
-.btn-red {
-  background-color: rgba(255, 0, 0, 0.3);
-  border: rgba(255, 0, 0, 0.3) outset;
-  color: black;
-}
-
-.btn-green {
-  background-color: rgba(82, 222, 43, 0.48);
-  border: rgba(82, 222, 43, 0.48) outset;
-  color: black;
-}
 </style>
