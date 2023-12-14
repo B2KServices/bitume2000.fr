@@ -23,7 +23,7 @@ const currentDate = new Date();
 const isDecember = currentDate.getMonth() === 11;
 
 const squads = ref<SquadModel[]>([]);
-const flakes = Array.from({ length: 100 }, createFlake);
+const flakes = Array.from({ length: 150 }, createFlake);
 
 function createFlake() {
   return {
@@ -65,9 +65,10 @@ function getSquads() {
 .home-page {
   top: 0;
   left: 0;
-  position: fixed;
-  width: 100vw;
+  position: absolute;
+  width: 100%;
   height: 100vh;
+  overflow: auto;
   z-index: -1;
   text-align: center;
 }
