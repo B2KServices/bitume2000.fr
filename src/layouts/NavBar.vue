@@ -43,7 +43,10 @@
       </a>
       <div class="separator"></div>
       <span v-if="useUserConnectedStore().getUserConnected() == null">Veuillez vous <br />connecter</span>
-      <span
+      <span class="profil" @click="
+          navBar =
+            navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
+        "
         v-else>Bonjour {{ useUserConnectedStore().getUserConnected().title
         }}, {{ useUserConnectedStore().getUserConnected()?.name }}</span>
       <ProfilWidget :user="useUserConnectedStore().getUserConnected()" @click="
@@ -64,6 +67,10 @@ const navBar = ref('profil-bar');
 </script>
 
 <style lang="scss" scoped>
+.profil:hover {
+  cursor: pointer;
+}
+
 div {
   position: relative;
 }
@@ -110,6 +117,7 @@ nav {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   position: sticky;
   border-radius: 0 0 30px 30px;
+  width: 100vw;
 
   .separator {
     flex-shrink: 0;
@@ -140,6 +148,7 @@ nav {
     display: flex;
     align-items: center;
     gap: 0.5em;
+    width: 100%;
   }
 
   a:hover {
