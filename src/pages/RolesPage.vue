@@ -45,7 +45,7 @@
           >
             <span>{{ role.name }}</span>
             <q-toggle v-model="state[role.id]" keep-color @update:model-value="roleUpdate(role.id, true)"
-                      :style="{ 'color': '#' + darkenColor(category.color)}" />
+                      :style="{ 'color': '#' + darkenColor(category.color)}" color="brown-10" size="500%"/>
           </div>
         </div>
       </div>
@@ -174,6 +174,10 @@ function roleUpdate(id: string, invert = false) {
   if (invert) {
     method = currentStatus ? 'POST' : 'DELETE';
   }
+  if (invert) {
+    return;
+  }
+  state.value[id] = ref(!currentStatus);
 
   useRestAgentStore()
     .restAgent.fetch('members/role', {
@@ -187,18 +191,23 @@ function roleUpdate(id: string, invert = false) {
     }
   })
     .then(() => {
-      if (invert) {
-        return;
-      }
-      state.value[id] = ref(!currentStatus);
+      console.log('ok');
     })
     .catch((err) => {
       console.error(err);
+      state.value[id] = ref(!currentStatus);
     });
 }
 </script>
 
 <style lang="scss" scoped>
+
+h1 {
+  font-size: 3vw;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
 h2 {
   font-size: 2vw;
