@@ -42,7 +42,12 @@
         <span>AUTRES</span>
       </a>
       <div class="separator"></div>
-      <span v-if="useUserConnectedStore().getUserConnected() == null">Veuillez vous <br />connecter</span>
+      <span v-if="useUserConnectedStore().getUserConnected() == null"
+            class="profil" @click="
+          navBar =
+            navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
+        "
+      >Veuillez vous <br />connecter</span>
       <span class="profil" @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
@@ -77,6 +82,10 @@ div {
 
 .profil-widget:hover {
   cursor: pointer;
+}
+
+.profil-widget {
+  margin-left: 10px;
 }
 
 .profil-bar {
