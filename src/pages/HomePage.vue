@@ -1,9 +1,9 @@
 <template>
-  <div v-if="squads.length > 0" class="home-page" :style="{ 'background-color': '#' + squads[0]?.color }">
+  <div class="home-page" :style="{ 'background-color': '#' + squads[0]?.color ?? '000000' }">
     <NavBar />
     <div>
       <h1>Joyeux Noël</h1>
-      <h1>L'équipe en tête est : {{ squads[0].name }}</h1>
+      <h1 v-if="squads.length > 0">L'équipe en tête est : {{ squads[0].name }}</h1>
       <div class="snowflakes" v-if="isDecember">
         <img v-for="(flake, index) in flakes" :key="index" class="snowflake"
              :style="{ top: flake.top + 'vh', left: flake.left + 'vw', animationDelay: flake.delay + 's' }"
