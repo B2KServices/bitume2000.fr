@@ -12,6 +12,8 @@ const { user }: { user?: UserModel | null } = defineProps(['user']);
       <img
         :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
         alt="profil_logo"
+        height="128"
+        width="128"
       />
     </div>
   </div>
@@ -19,6 +21,8 @@ const { user }: { user?: UserModel | null } = defineProps(['user']);
     <img
       :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
       alt="profil_logo"
+      height="128"
+      width="128"
     />
   </div>
 </template>
