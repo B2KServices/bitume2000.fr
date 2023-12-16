@@ -98,11 +98,9 @@ async function connect() {
 
       .input {
         margin: 0 auto;
-        //height: ;
         width: 50%;
         background: $light;
         border-radius: 30px;
-        //color: $primary;
       }
     }
 
@@ -112,17 +110,16 @@ async function connect() {
       justify-content: center;
       gap: 20px;
 
-      .switch {
-        background: $secondary;
+      .switch, .connect {
         border-radius: 25px;
         color: $light;
-      }
-
-      .connect {
-        width: 50%;
-        background: $primary;
-        border-radius: 25px;
-        color: $light;
+        &.switch {
+          background: $secondary;
+        }
+        &.connect {
+          width: 50%;
+          background: $primary;
+        }
       }
     }
   }
@@ -156,4 +153,5 @@ async function connect() {
     }
   }
 }
+
 </style>

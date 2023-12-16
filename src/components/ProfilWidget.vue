@@ -12,14 +12,20 @@ const { user }: { user?: UserModel | null } = defineProps(['user']);
       <img
         :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
         alt="profil_logo"
+        height="128"
+        width="128"
       />
     </div>
   </div>
   <div v-else>
+    <div>
     <img
       :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
       alt="profil_logo"
+      height="128"
+      width="128"
     />
+  </div>
   </div>
 </template>
 
@@ -41,7 +47,6 @@ div {
     img {
       width: 100%;
       height: auto;
-      display: block;
       border-radius: 50%;
     }
   }
