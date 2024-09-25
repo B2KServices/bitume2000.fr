@@ -19,7 +19,7 @@
     <q-dialog v-model="addRolePopup" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
-          <div class="text-h6">Proposer un role</div>
+          <div class="text-h6">Proposer un rôle</div>
         </q-card-section>
         <q-card-section class="q-pt-none">
           <q-input dense v-model="rolename" autofocus></q-input>
@@ -34,7 +34,7 @@
     <nav-bar />
     <q-btn class="ok-btn add-role" round icon="add" @click="addRolePopup = true" />
     <div id="role-page">
-      <h1>Choisissez vos roles</h1>
+      <h1>Choisissez vos rôles</h1>
 
       <div id="role-categories">
         <div v-for="(category, index) in categories" :key="index" class="category-card"
@@ -289,4 +289,36 @@ button {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.6), 0 4px 4px rgba(0, 0, 0, 0.6);
 }
 
+@media (max-width: 800px) {
+  h1 {
+    font-size: 10vw;
+  }
+
+  h2 {
+    font-size: 8vw;
+  }
+
+  .role-item {
+    font-size: 2.5vw; // affecte les toggles
+    margin: 0px;
+    padding: 0px;
+
+    span {
+      font-size: 4vw;
+    }
+  }
+
+  .category-card {
+    max-width: 800px;
+    width: 90vw;
+  }
+
+  .category-card:last-child {
+    margin-bottom: 100px;
+  }
+
+  #role-categories {
+    grid-row-gap: 35px;
+  }
+}
 </style>
