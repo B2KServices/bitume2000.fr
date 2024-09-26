@@ -1,6 +1,8 @@
 <template>
   <div :class="navigation_layout">
-    <nav v-if="useUserConnectedStore().getUserConnected() == null" :class="navBar">
+    <nav v-if="useUserConnectedStore().getUserConnected() == null"
+         :class="navBar"
+    >
       <a @click="$router.push('/login')">connexion</a>
     </nav>
     <nav v-else :class="navBar">
@@ -206,50 +208,59 @@ nav {
     }
   }
 
-  .navigation_layout:not(.open) {
-    nav:last-child {
-      a:not(:first-child) {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        padding: 0;
-        margin: 0;
-        transition:
-          max-height 0.5s ease-out,
-          opacity 0.25s ease-out,
-          padding 0.5s ease-out,
-          margin 0.5s ease-out;
+  .navigation_layout {
+    img:active {
+      transform: scale(0.9);
+      transition: transform 0.1s;
+    }
+
+    img {
+      transition: transform 0.5s;
+    }
+
+    &:not(.open) {
+      nav:last-child {
+        a:not(:first-child) {
+          max-height: 0;
+          overflow: hidden;
+          opacity: 0;
+          padding: 0;
+          margin: 0;
+          transition:
+            max-height 0.5s ease-out,
+            opacity 0.25s ease-out,
+            padding 0.5s ease-out,
+            margin 0.5s ease-out;
+        }
+        .separator {
+          opacity: 0.75;
+          height: 1px;
+          width: 40vw;
+          transition:
+            //height 1s ease-in-out,
+            width 0.5s ease-in-out,
+            opacity 0.5s ease-out;
+        }
       }
-      .separator {
-        opacity: 0.75;
-        height: 1px;
-        width: 40vw;
-        transition:
-          //height 1s ease-in-out,
-          width 0.5s ease-in-out,
-          opacity 0.5s ease-out;
+    }
+
+    &.open {
+      nav {
+        a {
+          transition:
+            max-height 0.5s ease-out,
+            opacity 0.25s ease-out,
+            padding 0.5s ease-out,
+            margin 0.5s ease-out;;
+        }
+        .separator {
+          transition:
+            //height 1s ease-in-out,
+            width 0.5s ease-in-out,
+            opacity 0.5s ease-out;
+        }
       }
     }
   }
-
-  .navigation_layout.open {
-    nav {
-      a {
-        transition:
-          max-height 0.5s ease-out,
-          opacity 0.25s ease-out,
-          padding 0.5s ease-out,
-          margin 0.5s ease-out;;
-      }
-      .separator {
-        transition:
-          //height 1s ease-in-out,
-          width 0.5s ease-in-out,
-          opacity 0.5s ease-out;
-      }
-    }
-  }
-
-
 }
 </style>

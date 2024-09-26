@@ -234,12 +234,10 @@ h2 {
   color: $light;
 }
 
-
 .disconnect-msg {
   padding-top: 20px;
   background: $secondary;
 }
-
 
 #role-categories {
   display: grid;
@@ -255,7 +253,6 @@ h2 {
   box-shadow: $dark 0px 0px 10px 0px;
   margin: 0 5%;
 }
-
 
 .category-card h2 {
   text-align: center;
@@ -319,6 +316,9 @@ button {
 
   #role-categories {
     grid-row-gap: 35px;
+    //grid-template-columns: 1fr;
+    //grid-auto-rows: unset;
+    //grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 </style>
