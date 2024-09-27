@@ -14,6 +14,19 @@
           type="search"
           @keyup.enter="connect"
         />
+        <q-input
+            v-if="!discord_connection"
+            v-model="password"
+            class="input"
+            label="Mot de passe"
+            color="primary"
+            outlined
+            rounded
+            type="password"
+            @keyup.enter="connect"
+          />
+
+
       </div>
       <div class="submit">
         <q-btn
@@ -26,7 +39,12 @@
           unelevated
           @click="connect"
         />
-        <q-btn :disable="true" class="switch" icon="password" round></q-btn>
+        <q-btn
+          class="switch"
+          icon="password"
+          @click="discord_connection = !discord_connection"
+          round
+        />
       </div>
     </div>
   </div>
@@ -39,10 +57,11 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 
 const pseudo = ref('');
+const password = ref('');
 const chargement = ref(false);
 const $router = useRouter();
 const $q = useQuasar();
-
+const discord_connection = ref(true);
 
 async function connect() {
   chargement.value = true;

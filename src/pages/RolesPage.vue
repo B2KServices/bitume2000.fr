@@ -316,9 +316,9 @@ button {
 
   #role-categories {
     grid-row-gap: 35px;
-    //grid-template-columns: 1fr;
-    //grid-auto-rows: unset;
-    //grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: 1fr;
+    grid-auto-rows: unset;
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 </style>
