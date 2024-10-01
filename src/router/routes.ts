@@ -4,30 +4,29 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     // component: () => import('layouts/NavBar.vue'),
-    children: [{ path: '', component: () => import('pages/HomePage.vue') }]
+    children: [{ path: '', component: () => import('pages/HomePage.vue') }],
   },
   {
     path: '/login',
-    children: [{ path: '', component: () => import('pages/LoginPage.vue') }]
+    children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
   },
   {
     path: '/roles',
     // component: () => import('layouts/NavBar.vue'),
-    children: [{ path: '', component: () => import('pages/RolesPage.vue') }]
+    children: [{ path: '', component: () => import('pages/RolesPage.vue') }],
   },
   {
     path: '/profil',
     // component: () => import('layouts/NavBar.vue'),
-    children: [{ path: '', component: () => import('pages/ProfilPage.vue') }]
+    children: [{ path: '', component: () => import('pages/ProfilPage.vue') }],
   },
-
 
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
-  }
+    component: () => import('pages/ErrorNotFound.vue'),
+  },
 ];
 
 export default routes;

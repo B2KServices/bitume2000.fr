@@ -1,7 +1,8 @@
 <template>
   <div :class="navigation_layout">
-    <nav v-if="useUserConnectedStore().getUserConnected() == null"
-         :class="navBar"
+    <nav
+      v-if="useUserConnectedStore().getUserConnected() == null"
+      :class="navBar"
     >
       <a @click="$router.push('/login')">connexion</a>
     </nav>
@@ -19,7 +20,9 @@
         width="120"
         @click="
           navigation_layout =
-            navigation_layout == 'navigation_layout open' ? 'navigation_layout' : 'navigation_layout open'
+            navigation_layout == 'navigation_layout open'
+              ? 'navigation_layout'
+              : 'navigation_layout open'
         "
       />
       <div class="separator"></div>
@@ -48,22 +51,33 @@
         <span>AUTRES</span>
       </a>
       <div class="separator"></div>
-      <span v-if="useUserConnectedStore().getUserConnected() == null"
-            class="profil" @click="
+      <span
+        v-if="useUserConnectedStore().getUserConnected() == null"
+        class="profil"
+        @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
         "
-      >Veuillez vous connecter</span>
-      <span class="profil" @click="
+        >Veuillez vous connecter</span
+      >
+      <span
+        class="profil"
+        @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
         "
-        v-else>Bonjour {{ useUserConnectedStore().getUserConnected().title
-        }}, {{ useUserConnectedStore().getUserConnected()?.name }}</span>
-      <ProfilWidget :user="useUserConnectedStore().getUserConnected()" @click="
+        v-else
+        >Bonjour {{ useUserConnectedStore().getUserConnected().title }},
+        {{ useUserConnectedStore().getUserConnected()?.name }}</span
+      >
+      <ProfilWidget
+        :user="useUserConnectedStore().getUserConnected()"
+        @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-        " class="profil-widget">
+        "
+        class="profil-widget"
+      >
       </ProfilWidget>
     </nav>
   </div>
@@ -226,11 +240,8 @@ nav {
           opacity: 0;
           padding: 0;
           margin: 0;
-          transition:
-            max-height 0.5s ease-out,
-            opacity 0.25s ease-out,
-            padding 0.5s ease-out,
-            margin 0.5s ease-out;
+          transition: max-height 0.5s ease-out, opacity 0.25s ease-out,
+            padding 0.5s ease-out, margin 0.5s ease-out;
         }
         .separator {
           opacity: 0.75;
@@ -238,8 +249,7 @@ nav {
           width: 40vw;
           transition:
             //height 1s ease-in-out,
-            width 0.5s ease-in-out,
-            opacity 0.5s ease-out;
+            width 0.5s ease-in-out, opacity 0.5s ease-out;
         }
       }
     }
@@ -247,17 +257,13 @@ nav {
     &.open {
       nav {
         a {
-          transition:
-            max-height 0.5s ease-out,
-            opacity 0.25s ease-out,
-            padding 0.5s ease-out,
-            margin 0.5s ease-out;;
+          transition: max-height 0.5s ease-out, opacity 0.25s ease-out,
+            padding 0.5s ease-out, margin 0.5s ease-out;
         }
         .separator {
           transition:
             //height 1s ease-in-out,
-            width 0.5s ease-in-out,
-            opacity 0.5s ease-out;
+            width 0.5s ease-in-out, opacity 0.5s ease-out;
         }
       }
     }

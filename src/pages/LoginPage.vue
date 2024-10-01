@@ -15,18 +15,16 @@
           @keyup.enter="connect"
         />
         <q-input
-            v-if="!discord_connection"
-            v-model="password"
-            class="input"
-            label="Mot de passe"
-            color="primary"
-            outlined
-            rounded
-            type="password"
-            @keyup.enter="connect"
-          />
-
-
+          v-if="!discord_connection"
+          v-model="password"
+          class="input"
+          label="Mot de passe"
+          color="primary"
+          outlined
+          rounded
+          type="password"
+          @keyup.enter="connect"
+        />
       </div>
       <div class="submit">
         <q-btn
@@ -78,13 +76,12 @@ async function connect() {
     color: 'red',
     position: 'top-right',
     icon: 'report_problem',
-    timeout: 2000
+    timeout: 2000,
   });
 }
 </script>
 
 <style lang="scss" scoped>
-
 .login-page {
   width: 100vw;
   height: 100vh;
@@ -129,7 +126,8 @@ async function connect() {
       justify-content: center;
       gap: 20px;
 
-      .switch, .connect {
+      .switch,
+      .connect {
         border-radius: 25px;
         color: $light;
         &.switch {
@@ -172,5 +170,4 @@ async function connect() {
     }
   }
 }
-
 </style>
