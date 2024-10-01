@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <nav v-if="useUserConnectedStore().getUserConnected() == null" :class="navBar">
+  <div :class="navigation_layout">
+    <nav
+      v-if="useUserConnectedStore().getUserConnected() == null"
+      :class="navBar"
+    >
       <a @click="$router.push('/login')">connexion</a>
     </nav>
     <nav v-else :class="navBar">
@@ -15,6 +18,12 @@
         height="120"
         src="logos/white_logo.svg"
         width="120"
+        @click="
+          navigation_layout =
+            navigation_layout == 'navigation_layout open'
+              ? 'navigation_layout'
+              : 'navigation_layout open'
+        "
       />
       <div class="separator"></div>
       <a @click="$router.push('/')">
@@ -42,22 +51,33 @@
         <span>AUTRES</span>
       </a>
       <div class="separator"></div>
-      <span v-if="useUserConnectedStore().getUserConnected() == null"
-            class="profil" @click="
+      <span
+        v-if="useUserConnectedStore().getUserConnected() == null"
+        class="profil"
+        @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
         "
-      >Veuillez vous <br />connecter</span>
-      <span class="profil" @click="
+        >Veuillez vous connecter</span
+      >
+      <span
+        class="profil"
+        @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
         "
-        v-else>Bonjour {{ useUserConnectedStore().getUserConnected().title
-        }}, {{ useUserConnectedStore().getUserConnected()?.name }}</span>
-      <ProfilWidget :user="useUserConnectedStore().getUserConnected()" @click="
+        v-else
+        >Bonjour {{ useUserConnectedStore().getUserConnected().title }},
+        {{ useUserConnectedStore().getUserConnected()?.name }}</span
+      >
+      <ProfilWidget
+        :user="useUserConnectedStore().getUserConnected()"
+        @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-        " class="profil-widget">
+        "
+        class="profil-widget"
+      >
       </ProfilWidget>
     </nav>
   </div>
@@ -69,6 +89,7 @@ import { useUserConnectedStore } from 'stores/useUserConnectedStore';
 import ProfilWidget from 'components/ProfilWidget.vue';
 
 const navBar = ref('profil-bar');
+const navigation_layout = ref('navigation_layout');
 </script>
 
 <style lang="scss" scoped>
@@ -164,11 +185,87 @@ nav {
     background: $dark;
     cursor: pointer;
   }
+}
 
-  @media (max-width: 1200px) {
-    a {
+@media (max-width: 1200px) {
+  nav {
+    flex-direction: column;
+    min-width: 100px;
+
+    .separator {
       //display: none;
-      flex-direction: column;
+      width: 15vw;
+      height: 1px;
+    }
+  }
+
+  .profil {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .profil-bar {
+    height: 250px;
+
+    &.open {
+      bottom: -200px;
+    }
+
+    a {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 10px;
+
+      &:first-child {
+        margin-top: 50px;
+      }
+    }
+  }
+
+  .navigation_layout {
+    img:active {
+      transform: scale(0.9);
+      transition: transform 0.1s;
+    }
+
+    img {
+      transition: transform 0.5s;
+    }
+
+    &:not(.open) {
+      nav:last-child {
+        a:not(:first-child) {
+          max-height: 0;
+          overflow: hidden;
+          opacity: 0;
+          padding: 0;
+          margin: 0;
+          transition: max-height 0.5s ease-out, opacity 0.25s ease-out,
+            padding 0.5s ease-out, margin 0.5s ease-out;
+        }
+        .separator {
+          opacity: 0.75;
+          height: 1px;
+          width: 40vw;
+          transition:
+            //height 1s ease-in-out,
+            width 0.5s ease-in-out, opacity 0.5s ease-out;
+        }
+      }
+    }
+
+    &.open {
+      nav {
+        a {
+          transition: max-height 0.5s ease-out, opacity 0.25s ease-out,
+            padding 0.5s ease-out, margin 0.5s ease-out;
+        }
+        .separator {
+          transition:
+            //height 1s ease-in-out,
+            width 0.5s ease-in-out, opacity 0.5s ease-out;
+        }
+      }
     }
   }
 }

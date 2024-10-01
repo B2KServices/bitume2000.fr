@@ -6,5 +6,3 @@ export interface RoleCategoryModel {
   color: string;
   children: RoleModel[];
 }
-
-

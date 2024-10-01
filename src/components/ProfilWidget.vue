@@ -6,8 +6,10 @@ const { user }: { user?: UserModel | null } = defineProps(['user']);
 </script>
 
 <template>
-  <div v-if="user != null"
-       :style="{ 'background-color': '#' + user?.squad.color }">
+  <div
+    v-if="user != null"
+    :style="{ 'background-color': '#' + user?.squad.color }"
+  >
     <div>
       <img
         :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
@@ -19,19 +21,17 @@ const { user }: { user?: UserModel | null } = defineProps(['user']);
   </div>
   <div v-else>
     <div>
-    <img
-      :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
-      alt="profil_logo"
-      height="128"
-      width="128"
-    />
-  </div>
+      <img
+        :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
+        alt="profil_logo"
+        height="128"
+        width="128"
+      />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-
-
 div {
   margin: 10px;
   display: flex;
