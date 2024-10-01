@@ -13,4 +13,3 @@ export interface UserModel {
   password: string | null;
   squad: SquadModel;
 }
-

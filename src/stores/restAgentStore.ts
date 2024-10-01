@@ -11,7 +11,7 @@ class RestAgent {
   fetch(route: string, init?: RequestInit): Promise<Response> {
     const fullUrl = new URL(route, this.backendAddress);
     return fetch(fullUrl, {
-      ...init
+      ...init,
     });
   }
 }

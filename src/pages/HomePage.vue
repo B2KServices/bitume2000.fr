@@ -1,13 +1,26 @@
 <template>
-  <div class="home-page" :style="{ 'background-color': '#' + squads[0]?.color ?? '000000' }">
+  <div
+    class="home-page"
+    :style="{ 'background-color': '#' + squads[0]?.color ?? '000000' }"
+  >
     <NavBar />
     <div>
       <h1>Joyeux Noël</h1>
-      <h1 v-if="squads.length > 0">L'équipe en tête est : {{ squads[0].name }}</h1>
+      <h1 v-if="squads.length > 0">
+        L'équipe en tête est : {{ squads[0].name }}
+      </h1>
       <div class="snowflakes" v-if="isDecember">
-        <img v-for="(flake, index) in flakes" :key="index" class="snowflake"
-             :style="{ top: flake.top + 'vh', left: flake.left + 'vw', animationDelay: flake.delay + 's' }"
-             src="icons/flocon.svg" />
+        <img
+          v-for="(flake, index) in flakes"
+          :key="index"
+          class="snowflake"
+          :style="{
+            top: flake.top + 'vh',
+            left: flake.left + 'vw',
+            animationDelay: flake.delay + 's',
+          }"
+          src="icons/flocon.svg"
+        />
       </div>
     </div>
   </div>
@@ -29,7 +42,7 @@ function createFlake() {
   return {
     top: Math.random() * -15,
     left: Math.random() * 100,
-    delay: Math.random() * 10
+    delay: Math.random() * 10,
   };
 }
 
@@ -47,8 +60,8 @@ onMounted(() => {
 function getSquads() {
   useRestAgentStore()
     .restAgent.fetch('squads', {
-    method: 'GET'
-  })
+      method: 'GET',
+    })
     .then((response) => {
       if (response.status === 200) {
         response.json().then((data) => {
@@ -97,7 +110,8 @@ h1 {
   width: 10px;
   height: 10px;
   opacity: 0.7;
-  animation: snowflake-fall 10s linear infinite, snowflake-rotate 3s linear infinite;
+  animation: snowflake-fall 10s linear infinite,
+    snowflake-rotate 3s linear infinite;
   animation-iteration-count: infinite;
   transform: rotate(0deg);
 }
@@ -108,9 +122,8 @@ h1 {
     opacity: 0.7;
   }
   100% {
-    transform: translateY(100vh) rotate(360*2deg);
+    transform: translateY(100vh) rotate(360 * 2deg);
     opacity: 0;
   }
 }
-
 </style>

@@ -13,12 +13,12 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
     }
     useRestAgentStore()
       .restAgent.fetch('members/id', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${Cookies.get('token')}`,
-        Accept: 'application/json'
-      }
-    })
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`,
+          Accept: 'application/json',
+        },
+      })
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
@@ -39,12 +39,12 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
     if (password === null) {
       const response = await useRestAgentStore().restAgent.fetch('auth/login', {
         body: JSON.stringify({
-          username: username
+          username: username,
         }),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        method: 'POST'
+        method: 'POST',
       });
       if (!response.ok) {
         return false;
@@ -66,6 +66,6 @@ export const useUserConnectedStore = defineStore('userConnected', () => {
     getUserConnected,
     connect,
     disconnect,
-    getToken: () => Cookies.get('token')
+    getToken: () => Cookies.get('token'),
   };
 });
