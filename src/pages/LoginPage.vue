@@ -50,9 +50,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { useUserConnectedStore } from 'stores/useUserConnectedStore';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
+import { useAuthApi } from 'src/composables/auth/useAuthApi.ts';
 
 const pseudo = ref('');
 const password = ref('');
@@ -60,24 +60,38 @@ const chargement = ref(false);
 const $router = useRouter();
 const $q = useQuasar();
 const discord_connection = ref(true);
-
+const userApi = useAuthApi();
 async function connect() {
   chargement.value = true;
-  const res = await useUserConnectedStore().connect(pseudo.value, null);
-  const dir = $router.currentRoute.value.query.dir;
-  if (res) {
-    if (dir) await $router.push(dir as string);
-    else await $router.push('/');
-    return;
+  if (discord_connection.value) {
+    userApi.login_discord(pseudo.value).then(() => {
+        chargement.value = false;
+        $router.push('/');
+    }).catch((error) => {
+        chargement.value = false;
+        $q.notify({
+          message: error.message,
+          color: 'red',
+          position: 'top-right',
+          icon: 'report_problem',
+          timeout: 2000,
+        });
+    });
+  } else {
+    userApi.login(pseudo.value, password.value).then(() => {
+      chargement.value = false;
+      $router.push('/');
+    }).catch((error) => {
+      chargement.value = false;
+      $q.notify({
+        message: error.message,
+        color: 'red',
+        position: 'top-right',
+        icon: 'report_problem',
+        timeout: 2000,
+      });
+    });
   }
-  chargement.value = false;
-  $q.notify({
-    message: 'Pseudo incorrect',
-    color: 'red',
-    position: 'top-right',
-    icon: 'report_problem',
-    timeout: 2000,
-  });
 }
 </script>
 

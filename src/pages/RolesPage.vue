@@ -1,3 +1,34 @@
+
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { RoleCategoryModel } from 'src/models/role-category-model.ts';
+
+const temp = ref(false);
+const categories = ref<RoleCategoryModel[]>([]);
+const persistent = ref(false);
+const addRolePopup = ref(false);
+const rolename = ref('');
+const selectedCategories = ref('');
+const categoriesOptions = ref<string[]>([]);
+
+
+function darkenColor(hexCode: string) {
+  const hex = hexCode;
+  const rgb = [
+    parseInt(hex.slice(0, 2), 16),
+    parseInt(hex.slice(2, 4), 16),
+    parseInt(hex.slice(4, 6), 16),
+  ];
+
+  const darkenedRgb = rgb.map((component) => Math.round(component * 0.5));
+
+  return darkenedRgb
+    .map((component) => component.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+
+</script>
 <template>
   <div class="role-page">
     <q-dialog
@@ -48,12 +79,11 @@
             flat
             label="Proposer"
             v-close-popup
-            @click="SubmitRole"
+            @click="console.log('coming soon')"
           ></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
-    <nav-bar />
     <q-btn
       class="ok-btn add-role"
       round
@@ -74,16 +104,16 @@
             {{ category.name }}
           </h2>
           <div
-            v-for="(role, roleIndex) in category.children"
+            v-for="(role, roleIndex) in category.roles"
             :key="roleIndex"
             class="role-item"
-            @click="roleUpdate(role.id)"
+            @click="false"
           >
             <span>{{ role.name }}</span>
             <q-toggle
-              v-model="state[role.id]"
+              v-model="temp"
               keep-color
-              @update:model-value="roleUpdate(role.id, true)"
+              @update:model-value="false"
               :style="{ color: '#' + darkenColor(category.color) }"
               color="brown-10"
               size="500%"
@@ -94,150 +124,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { onMounted, ref, Ref } from 'vue';
-import { useRestAgentStore } from 'stores/restAgentStore';
-import { useUserConnectedStore } from 'stores/useUserConnectedStore';
-import { RoleCategoryModel } from 'src/models/RoleCategoryModel';
-import NavBar from 'layouts/NavBar.vue';
-
-const categories = ref<RoleCategoryModel[]>([]);
-const state = ref<Record<string, Ref<boolean>>>({});
-const persistent = ref(false);
-const addRolePopup = ref(false);
-const rolename = ref('');
-const selectedCategories = ref('');
-const categoriesOptions = ref<string[]>([]);
-const categoriesId = ref<string[]>([]);
-
-onMounted(() => {
-  setCategories();
-});
-
-function darkenColor(hexCode: string) {
-  const hex = hexCode;
-  const rgb = [
-    parseInt(hex.slice(0, 2), 16),
-    parseInt(hex.slice(2, 4), 16),
-    parseInt(hex.slice(4, 6), 16),
-  ];
-
-  const darkenedRgb = rgb.map((component) => Math.round(component * 0.5));
-
-  return darkenedRgb
-    .map((component) => component.toString(16).padStart(2, '0'))
-    .join('');
-}
-
-function SubmitRole() {
-  const index = categoriesOptions.value.indexOf(selectedCategories.value);
-  const id = categoriesId.value[index];
-  useRestAgentStore()
-    .restAgent.fetch('role/auth', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: rolename.value,
-        category: id,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${useUserConnectedStore().getToken()}`,
-      },
-    })
-    .then(async (res) => {
-      if (res.status == 401) {
-        persistent.value = true;
-        return;
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function setCategories() {
-  useRestAgentStore()
-    .restAgent.fetch('role/category', {
-      headers: {
-        Authorization: `Bearer ${useUserConnectedStore().getToken()}`,
-      },
-    })
-    .then(async (res) => {
-      if (res.status == 401) {
-        persistent.value = true;
-        return;
-      }
-
-      const data = await res.text();
-      categories.value = JSON.parse(data);
-
-      for (const category of categories.value) {
-        categoriesOptions.value.push(category.name);
-        categoriesId.value.push(category.id);
-        for (const role of category.children) {
-          state.value[role.id] = ref(false);
-        }
-      }
-
-      getOwnRoles();
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function getOwnRoles() {
-  useRestAgentStore()
-    .restAgent.fetch('members/role', {
-      headers: {
-        Authorization: `Bearer ${useUserConnectedStore().getToken()}`,
-      },
-    })
-    .then(async (res) => {
-      if (res.status == 401) {
-        persistent.value = true;
-        return;
-      }
-
-      const data = await res.text();
-      const roles = JSON.parse(data);
-
-      for (const role of roles) {
-        state.value[role.id] = ref(true);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-function roleUpdate(id: string, invert = false) {
-  const currentStatus = state.value[id] || false;
-  let method = currentStatus ? 'DELETE' : 'POST';
-  if (invert) {
-    method = currentStatus ? 'POST' : 'DELETE';
-  } else {
-    state.value[id] = ref(!currentStatus);
-  }
-
-  useRestAgentStore()
-    .restAgent.fetch('members/role', {
-      method,
-      body: JSON.stringify({
-        role_id: id,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${useUserConnectedStore().getToken()}`,
-      },
-    })
-    .catch((err) => {
-      console.error(err);
-      state.value[id] = ref(!currentStatus);
-    });
-}
-</script>
 
 <style lang="scss" scoped>
 h1 {

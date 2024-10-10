@@ -1,96 +1,118 @@
+<script setup lang="ts">
+
+
+import ProfilWidget from 'components/ProfilWidget.vue';
+import { UserModel } from 'src/models/user-model.ts';
+import { useUsersApi } from 'src/composables/users/useUsersApi.ts';
+import { ref } from 'vue';
+
+defineOptions({
+  name: 'MainLayout',
+});
+
+const meUser = ref<UserModel>();
+const userApi = useUsersApi();
+
+userApi.getMe().then((user) => {
+  meUser.value = user;
+});
+
+const navBar = ref('profil-bar');
+const navigation_layout = ref('navigation_layout');
+
+</script>
 <template>
-  <div :class="navigation_layout">
-    <nav
-      v-if="useUserConnectedStore().getUserConnected() == null"
-      :class="navBar"
-    >
-      <a @click="$router.push('/login')">connexion</a>
-    </nav>
-    <nav v-else :class="navBar">
-      <a @click="$router.push('/profil')">Gérer le compte</a>
-      <a @click="$router.push('/roles')">Gérer les rôles</a>
-      <a @click="$router.push('/achievements')">Voir les achievements</a>
-      <a @click="useUserConnectedStore().disconnect()">Déconnexion</a>
-    </nav>
-    <nav>
-      <img
-        alt="logo"
-        height="120"
-        src="logos/white_logo.svg"
-        width="120"
-        @click="
+  <q-layout view="lHh Lpr lFf">
+    <div :class="navigation_layout">
+      <nav
+        v-if="!meUser"
+        :class="navBar"
+      >
+        <a @click="$router.push('/login')">connexion</a>
+      </nav>
+      <nav v-else :class="navBar">
+        <a @click="$router.push('/profil')">Gérer le compte</a>
+        <a @click="$router.push('/roles')">Gérer les rôles</a>
+        <a @click="$router.push('/achievements')">Voir les achievements</a>
+        <a @click="console.log('coming soon')">Déconnexion</a>
+      </nav>
+      <nav>
+        <img
+          alt="logo"
+          height="120"
+          src="logos/white_logo.svg"
+          width="120"
+          @click="
           navigation_layout =
             navigation_layout == 'navigation_layout open'
               ? 'navigation_layout'
               : 'navigation_layout open'
         "
-      />
-      <div class="separator"></div>
-      <a @click="$router.push('/')">
-        <img alt="home_logo" height="30" src="icons/home.svg" width="32" />
-        <span>ACCUEIL</span>
-      </a>
-      <div class="separator"></div>
-      <a>
-        <img alt="game_logo" height="30" src="icons/game.svg" width="32" />
-        <span>JEUX ET SERVEUR</span>
-      </a>
-      <div class="separator"></div>
-      <a>
-        <img alt="art_logo" height="30" src="icons/art.svg" width="32" />
-        <span>ARTS</span>
-      </a>
-      <div class="separator"></div>
-      <a>
-        <img alt="social_logo" height="30" src="icons/social.svg" width="32" />
-        <span>SOCIAL</span>
-      </a>
-      <div class="separator"></div>
-      <a>
-        <img alt="other_logo" height="30" src="icons/other.svg" width="32" />
-        <span>AUTRES</span>
-      </a>
-      <div class="separator"></div>
-      <span
-        v-if="useUserConnectedStore().getUserConnected() == null"
-        class="profil"
-        @click="
+        />
+        <div class="separator"></div>
+        <a @click="$router.push('/')">
+          <img alt="home_logo" height="30" src="icons/home.svg" width="32" />
+          <span>ACCUEIL</span>
+        </a>
+        <div class="separator"></div>
+        <a>
+          <img alt="game_logo" height="30" src="icons/game.svg" width="32" />
+          <span>JEUX ET SERVEUR</span>
+        </a>
+        <div class="separator"></div>
+        <a>
+          <img alt="art_logo" height="30" src="icons/art.svg" width="32" />
+          <span>ARTS</span>
+        </a>
+        <div class="separator"></div>
+        <a>
+          <img alt="social_logo" height="30" src="icons/social.svg" width="32" />
+          <span>SOCIAL</span>
+        </a>
+        <div class="separator"></div>
+        <a>
+          <img alt="other_logo" height="30" src="icons/other.svg" width="32" />
+          <span>AUTRES</span>
+        </a>
+        <div class="separator"></div>
+        <span
+          v-if="!meUser"
+          class="profil"
+          @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
         "
         >Veuillez vous connecter</span
-      >
-      <span
-        class="profil"
-        @click="
+        >
+        <span
+          class="profil"
+          @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
         "
-        v-else
-        >Bonjour {{ useUserConnectedStore().getUserConnected().title }},
-        {{ useUserConnectedStore().getUserConnected()?.name }}</span
-      >
-      <ProfilWidget
-        :user="useUserConnectedStore().getUserConnected()"
-        @click="
+          v-else
+        >Bonjour {{meUser.username}}</span
+        >
+        <ProfilWidget
+          v-if="meUser"
+          :user="meUser"
+          @click="
           navBar =
             navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
         "
-        class="profil-widget"
-      >
-      </ProfilWidget>
-    </nav>
-  </div>
+          class="profil-widget"
+        >
+        </ProfilWidget>
+      </nav>
+    </div>
+
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+  </q-layout>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-import { useUserConnectedStore } from 'stores/useUserConnectedStore';
-import ProfilWidget from 'components/ProfilWidget.vue';
 
-const navBar = ref('profil-bar');
-const navigation_layout = ref('navigation_layout');
-</script>
 
 <style lang="scss" scoped>
 .profil:hover {
@@ -241,7 +263,7 @@ nav {
           padding: 0;
           margin: 0;
           transition: max-height 0.5s ease-out, opacity 0.25s ease-out,
-            padding 0.5s ease-out, margin 0.5s ease-out;
+          padding 0.5s ease-out, margin 0.5s ease-out;
         }
         .separator {
           opacity: 0.75;
@@ -258,7 +280,7 @@ nav {
       nav {
         a {
           transition: max-height 0.5s ease-out, opacity 0.25s ease-out,
-            padding 0.5s ease-out, margin 0.5s ease-out;
+          padding 0.5s ease-out, margin 0.5s ease-out;
         }
         .separator {
           transition:
