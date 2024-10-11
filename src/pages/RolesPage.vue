@@ -2,29 +2,46 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { RoleCategoryModel } from 'src/models/role-category-model.ts';
+import { useRolesApi } from 'src/composables/roles/useRolesApi.ts';
+import { RoleModel } from 'src/models/role-category.ts';
+import { useUsersApi } from 'src/composables/users/useUsersApi.ts';
+import { useQuasar } from 'quasar';
 
-const temp = ref(false);
 const categories = ref<RoleCategoryModel[]>([]);
 const persistent = ref(false);
 const addRolePopup = ref(false);
 const rolename = ref('');
 const selectedCategories = ref('');
 const categoriesOptions = ref<string[]>([]);
+const userRoles = ref<RoleModel[]>([]);
+const selectedRoles = ref<string[]>([]);
+const $q = useQuasar();
+
+const roleApi = useRolesApi();
+const usersApi = useUsersApi();
+
+roleApi.getCategories().then((data) => {
+  categories.value = data;
+  categoriesOptions.value = data.map((category) => category.name);
+});
+
+usersApi.getMyRoles().then((data) => {
+  userRoles.value = data;
+  selectedRoles.value = data.map((role) => role.id_role);
+});
+
+function updateRole(idRole: string, newValue: string[]) {
+  const addingRole = newValue.includes(idRole);
+  usersApi.updateMyRole(idRole, addingRole).catch((error) => {
+    $q.notify({
+      message: error.message,
+      color: 'negative',
+      position: 'top',
+      timeout: 2000,
+    });
+  });
 
 
-function darkenColor(hexCode: string) {
-  const hex = hexCode;
-  const rgb = [
-    parseInt(hex.slice(0, 2), 16),
-    parseInt(hex.slice(2, 4), 16),
-    parseInt(hex.slice(4, 6), 16),
-  ];
-
-  const darkenedRgb = rgb.map((component) => Math.round(component * 0.5));
-
-  return darkenedRgb
-    .map((component) => component.toString(16).padStart(2, '0'))
-    .join('');
 }
 
 
@@ -98,9 +115,9 @@ function darkenColor(hexCode: string) {
           v-for="(category, index) in categories"
           :key="index"
           class="category-card"
-          :style="{ 'background-color': '#' + category.color }"
+          :style="{ 'background-color': category.color }"
         >
-          <h2 :style="{ color: '#' + darkenColor(category.color) }">
+          <h2 :style="{ 'background-color': 'dark'}">
             {{ category.name }}
           </h2>
           <div
@@ -111,12 +128,13 @@ function darkenColor(hexCode: string) {
           >
             <span>{{ role.name }}</span>
             <q-toggle
-              v-model="temp"
+              v-model="selectedRoles"
               keep-color
-              @update:model-value="false"
-              :style="{ color: '#' + darkenColor(category.color) }"
-              color="brown-10"
+              @update:model-value="(val) => updateRole(role.id_role, val)"
+              :style="{ color: 'dark'}"
+              color="dark"
               size="500%"
+              :val="role.id_role"
             />
           </div>
         </div>

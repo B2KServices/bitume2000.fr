@@ -115,6 +115,12 @@ const navigation_layout = ref('navigation_layout');
 
 
 <style lang="scss" scoped>
+.navigation_layout {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+
 .profil:hover {
   cursor: pointer;
 }
