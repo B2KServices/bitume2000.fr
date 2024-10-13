@@ -1,9 +1,10 @@
 {
-  "name": "bitume2000",
+  "name": "Bitume2000",
   "version": "0.0.1",
-  "description": "Site officiel des bithuméens (groupe d'amis)",
+  "description": "Bitume2000",
   "productName": "Bitume2000",
-  "author": "Guilheim Chataing <guilheimchataing@gmail.com>",
+  "author": "B2K Dev",
+  "type": "module",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
@@ -13,27 +14,30 @@
     "build": "quasar build"
   },
   "dependencies": {
+    "@quasar/cli": "^2.4.1",
     "@quasar/extras": "^1.16.4",
-    "pinia": "^2.0.11",
-    "quasar": "^2.6.0",
-    "rollup": "^4.22.4",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0"
+    "@vueuse/core": "^11.1.0",
+    "axios": "^1.2.1",
+    "quasar": "^2.16.0",
+    "vue": "^3.4.18",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^1.3.0",
-    "@types/node": "^12.20.21",
-    "@typescript-eslint/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/parser": "^5.10.0",
+    "@quasar/app-vite": "^2.0.0-beta.12",
+    "@types/node": "^20.5.9",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
     "autoprefixer": "^10.4.2",
-    "eslint": "^8.10.0",
-    "eslint-config-prettier": "^8.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-vue": "^9.0.0",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.4"
+    "prettier": "^3.0.3",
+    "typescript": "~5.5.3",
+    "vite-plugin-checker": "^0.8.0",
+    "vue-tsc": "^2.0.29"
   },
   "engines": {
-    "node": "^18 || ^16 || ^14.19",
+    "node": "^24 || ^22 || ^20 || ^18",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   }

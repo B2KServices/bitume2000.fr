@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 import { defineProps } from 'vue';
-import { UserModel } from 'src/models/UserModel';
+import { UserModel } from 'src/models/user-model.ts';
 
-const { user }: { user?: UserModel | null } = defineProps(['user']);
+type Props = {
+  user?: UserModel;
+};
+
+defineProps<Props>();
 </script>
 
 <template>
-  <div
-    v-if="user != null"
-    :style="{ 'background-color': '#' + user?.squad.color }"
-  >
+  <div v-if="user">
     <div>
       <img
-        :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
+        :src="user.avatar_url == null ? 'icons/profil.svg' : user.avatar_url"
         alt="profil_logo"
         height="128"
         width="128"
@@ -22,7 +23,7 @@ const { user }: { user?: UserModel | null } = defineProps(['user']);
   <div v-else>
     <div>
       <img
-        :src="user?.avatar == null ? 'icons/profil.svg' : user?.avatar"
+        :src="'icons/profil.svg'"
         alt="profil_logo"
         height="128"
         width="128"

@@ -1,14 +1,6 @@
 <template>
-  <div
-    class="home-page"
-    :style="{ 'background-color': '#' + squads[0]?.color ?? '000000' }"
-  >
-    <NavBar />
+  <div class="home-page">
     <div>
-      <h1>Joyeux Noël</h1>
-      <h1 v-if="squads.length > 0">
-        L'équipe en tête est : {{ squads[0].name }}
-      </h1>
       <div class="snowflakes" v-if="isDecember">
         <img
           v-for="(flake, index) in flakes"
@@ -20,6 +12,7 @@
             animationDelay: flake.delay + 's',
           }"
           src="icons/flocon.svg"
+          alt="flake"
         />
       </div>
     </div>
@@ -27,15 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import NavBar from 'layouts/NavBar.vue';
-import { onMounted, ref } from 'vue';
-import { SquadModel } from 'src/models/SquadModel';
-import { useRestAgentStore } from 'stores/restAgentStore';
-
 const currentDate = new Date();
 const isDecember = currentDate.getMonth() === 11;
 
-const squads = ref<SquadModel[]>([]);
 const flakes = Array.from({ length: 150 }, createFlake);
 
 function createFlake() {
@@ -52,26 +39,7 @@ function updateFlakes() {
   }, 100);
 }
 
-onMounted(() => {
-  getSquads();
-  updateFlakes();
-});
-
-function getSquads() {
-  useRestAgentStore()
-    .restAgent.fetch('squads', {
-      method: 'GET',
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        response.json().then((data) => {
-          const tempSquads: SquadModel[] = data;
-          tempSquads.sort((a, b) => b.PointsTotal - a.PointsTotal);
-          squads.value = tempSquads;
-        });
-      }
-    });
-}
+updateFlakes();
 </script>
 
 <style scoped lang="scss">
@@ -110,7 +78,8 @@ h1 {
   width: 10px;
   height: 10px;
   opacity: 0.7;
-  animation: snowflake-fall 10s linear infinite,
+  animation:
+    snowflake-fall 10s linear infinite,
     snowflake-rotate 3s linear infinite;
   animation-iteration-count: infinite;
   transform: rotate(0deg);
