@@ -1,24 +1,7 @@
-<script setup lang="ts">
-import NavBar from 'layouts/NavBar.vue';
-import { useUserConnectedStore } from 'stores/useUserConnectedStore';
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <NavBar />
-  <div
-    class="profil-page"
-    :style="{
-      'background-color':
-        '#' + useUserConnectedStore().getUserConnected()?.squad.color,
-    }"
-  >
-    <div>
-      <h1>
-        {{ useUserConnectedStore().getUserConnected()?.title }},
-        {{ useUserConnectedStore().getUserConnected()?.name }}
-      </h1>
-    </div>
-  </div>
+  <div />
 </template>
 
 <style scoped lang="scss">
