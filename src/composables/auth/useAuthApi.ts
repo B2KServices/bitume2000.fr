@@ -13,7 +13,7 @@ export function useAuthApi() {
 
   async function login_discord(username: string) {
     return axios.$post<UserModel>('auth/login/discord', {
-      username: username
+      username: username,
     });
   }
 

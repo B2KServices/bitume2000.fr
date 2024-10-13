@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="home-page"
-  >
+  <div class="home-page">
     <div>
       <div class="snowflakes" v-if="isDecember">
         <img
@@ -14,14 +12,14 @@
             animationDelay: flake.delay + 's',
           }"
           src="icons/flocon.svg"
-         alt="flake"/>
+          alt="flake"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-
 const currentDate = new Date();
 const isDecember = currentDate.getMonth() === 11;
 
@@ -42,7 +40,6 @@ function updateFlakes() {
 }
 
 updateFlakes();
-
 </script>
 
 <style scoped lang="scss">
@@ -81,7 +78,8 @@ h1 {
   width: 10px;
   height: 10px;
   opacity: 0.7;
-  animation: snowflake-fall 10s linear infinite,
+  animation:
+    snowflake-fall 10s linear infinite,
     snowflake-rotate 3s linear infinite;
   animation-iteration-count: infinite;
   transform: rotate(0deg);

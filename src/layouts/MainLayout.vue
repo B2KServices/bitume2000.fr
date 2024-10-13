@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-
 import ProfilWidget from 'components/ProfilWidget.vue';
 import { UserModel } from 'src/models/user-model.ts';
 import { useUsersApi } from 'src/composables/users/useUsersApi.ts';
@@ -19,15 +17,11 @@ userApi.getMe().then((user) => {
 
 const navBar = ref('profil-bar');
 const navigation_layout = ref('navigation_layout');
-
 </script>
 <template>
   <q-layout view="lHh Lpr lFf">
     <div :class="navigation_layout">
-      <nav
-        v-if="!meUser"
-        :class="navBar"
-      >
+      <nav v-if="!meUser" :class="navBar">
         <a @click="$router.push('/login')">connexion</a>
       </nav>
       <nav v-else :class="navBar">
@@ -37,17 +31,17 @@ const navigation_layout = ref('navigation_layout');
         <a @click="console.log('coming soon')">Déconnexion</a>
       </nav>
       <nav>
-        <img
+        <q-img
           alt="logo"
           height="120"
-          src="logos/white_logo.svg"
+          src="logos/logo_2.svg"
           width="120"
           @click="
-          navigation_layout =
-            navigation_layout == 'navigation_layout open'
-              ? 'navigation_layout'
-              : 'navigation_layout open'
-        "
+            navigation_layout =
+              navigation_layout == 'navigation_layout open'
+                ? 'navigation_layout'
+                : 'navigation_layout open'
+          "
         />
         <div class="separator"></div>
         <a @click="$router.push('/')">
@@ -66,7 +60,12 @@ const navigation_layout = ref('navigation_layout');
         </a>
         <div class="separator"></div>
         <a>
-          <img alt="social_logo" height="30" src="icons/social.svg" width="32" />
+          <img
+            alt="social_logo"
+            height="30"
+            src="icons/social.svg"
+            width="32"
+          />
           <span>SOCIAL</span>
         </a>
         <div class="separator"></div>
@@ -79,30 +78,30 @@ const navigation_layout = ref('navigation_layout');
           v-if="!meUser"
           class="profil"
           @click="
-          navBar =
-            navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-        "
-        >Veuillez vous connecter</span
+            navBar =
+              navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
+          "
+          >Veuillez vous connecter</span
         >
         <span
           class="profil"
           @click="
-          navBar =
-            navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-        "
+            navBar =
+              navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
+          "
           v-else
-        >Bonjour {{meUser.username}}</span
+          >Bonjour {{ meUser.username }}</span
         >
         <ProfilWidget
           v-if="meUser"
           :user="meUser"
           @click="
-          navBar =
-            navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-        "
+            navBar =
+              navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
+          "
           class="profil-widget"
-        >
-        </ProfilWidget>
+        />
+        <q-avatar icon="person" />
       </nav>
     </div>
 
@@ -111,8 +110,6 @@ const navigation_layout = ref('navigation_layout');
     </q-page-container>
   </q-layout>
 </template>
-
-
 
 <style lang="scss" scoped>
 .navigation_layout {
@@ -156,7 +153,7 @@ div {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    color: $light;
+    color: white;
     margin: 50px 0 0 0;
   }
 
@@ -167,7 +164,7 @@ div {
 
 nav {
   min-width: 800px;
-  background: $dark-page;
+  background: #fbe0b5;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -191,7 +188,7 @@ nav {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    color: $light;
+    color: $dark;
   }
 
   & > span {
@@ -210,7 +207,6 @@ nav {
   }
 
   a:hover {
-    background: $dark;
     cursor: pointer;
   }
 }
@@ -268,8 +264,11 @@ nav {
           opacity: 0;
           padding: 0;
           margin: 0;
-          transition: max-height 0.5s ease-out, opacity 0.25s ease-out,
-          padding 0.5s ease-out, margin 0.5s ease-out;
+          transition:
+            max-height 0.5s ease-out,
+            opacity 0.25s ease-out,
+            padding 0.5s ease-out,
+            margin 0.5s ease-out;
         }
         .separator {
           opacity: 0.75;
@@ -277,7 +276,8 @@ nav {
           width: 40vw;
           transition:
             //height 1s ease-in-out,
-            width 0.5s ease-in-out, opacity 0.5s ease-out;
+            width 0.5s ease-in-out,
+            opacity 0.5s ease-out;
         }
       }
     }
@@ -285,13 +285,17 @@ nav {
     &.open {
       nav {
         a {
-          transition: max-height 0.5s ease-out, opacity 0.25s ease-out,
-          padding 0.5s ease-out, margin 0.5s ease-out;
+          transition:
+            max-height 0.5s ease-out,
+            opacity 0.25s ease-out,
+            padding 0.5s ease-out,
+            margin 0.5s ease-out;
         }
         .separator {
           transition:
             //height 1s ease-in-out,
-            width 0.5s ease-in-out, opacity 0.5s ease-out;
+            width 0.5s ease-in-out,
+            opacity 0.5s ease-out;
         }
       }
     }

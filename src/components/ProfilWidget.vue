@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { defineProps } from 'vue';
-import { UserModel} from 'src/models/user-model.ts';
+import { UserModel } from 'src/models/user-model.ts';
 
 type Props = {
   user?: UserModel;
 };
 
-defineProps<Props>()
+defineProps<Props>();
 </script>
 
 <template>
