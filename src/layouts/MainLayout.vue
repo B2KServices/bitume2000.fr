@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import ProfilWidget from 'components/ProfilWidget.vue';
+
 import { UserModel } from 'src/models/user-model.ts';
 import { useUsersApi } from 'src/composables/users/useUsersApi.ts';
 import { ref } from 'vue';
+import { useAuthApi } from 'src/composables/auth/useAuthApi.ts';
 
 defineOptions({
   name: 'MainLayout',
@@ -10,6 +11,7 @@ defineOptions({
 
 const meUser = ref<UserModel>();
 const userApi = useUsersApi();
+const authApi = useAuthApi()
 
 userApi.getMe().then((user) => {
   meUser.value = user;
@@ -20,22 +22,22 @@ const navigation_layout = ref('navigation_layout');
 </script>
 <template>
   <q-layout view="lHh Lpr lFf">
-    <div :class="navigation_layout">
-      <nav v-if="!meUser" :class="navBar">
-        <a @click="$router.push('/login')">connexion</a>
-      </nav>
-      <nav v-else :class="navBar">
-        <a @click="$router.push('/profil')">Gérer le compte</a>
-        <a @click="$router.push('/roles')">Gérer les rôles</a>
-        <a @click="$router.push('/achievements')">Voir les achievements</a>
-        <a @click="console.log('coming soon')">Déconnexion</a>
-      </nav>
-      <nav>
-        <q-img
+    <q-list :class="navigation_layout">
+      <q-list v-if="!meUser" :class="[navBar]">
+        <q-item to="/login">connexion</q-item>
+      </q-list>
+      <q-list v-else :class="[navBar, 'q-px-lg']" style="border-radius: 30px" >
+        <q-item to="/profil" >Gérer le compte</q-item>
+        <q-item to="/roles">Gérer les rôles</q-item>
+        <q-item to="/achievements">Voir les achievements</q-item>
+        <q-item to="/login" @click="authApi.logout()">Déconnexion</q-item>
+      </q-list>
+      <nav >
+        <q-list>
+        <q-avatar size="150px">
+        <img
           alt="logo"
-          height="120"
           src="logos/logo_2.svg"
-          width="120"
           @click="
             navigation_layout =
               navigation_layout == 'navigation_layout open'
@@ -43,23 +45,26 @@ const navigation_layout = ref('navigation_layout');
                 : 'navigation_layout open'
           "
         />
-        <div class="separator"></div>
-        <a @click="$router.push('/')">
+        </q-avatar>
+        </q-list>
+        <q-list style="display: flex" class="mobile-row">
+        <div class="separator"/>
+        <q-item to="/">
           <img alt="home_logo" height="30" src="icons/home.svg" width="32" />
           <span>ACCUEIL</span>
-        </a>
-        <div class="separator"></div>
-        <a>
+        </q-item>
+        <div class="separator"/>
+        <q-item to="/games">
           <img alt="game_logo" height="30" src="icons/game.svg" width="32" />
           <span>JEUX ET SERVEUR</span>
-        </a>
-        <div class="separator"></div>
-        <a>
+        </q-item>
+        <div class="separator"/>
+        <q-item to="/art">
           <img alt="art_logo" height="30" src="icons/art.svg" width="32" />
           <span>ARTS</span>
-        </a>
-        <div class="separator"></div>
-        <a>
+        </q-item>
+        <div class="separator"/>
+        <q-item to="/social">
           <img
             alt="social_logo"
             height="30"
@@ -67,43 +72,29 @@ const navigation_layout = ref('navigation_layout');
             width="32"
           />
           <span>SOCIAL</span>
-        </a>
-        <div class="separator"></div>
-        <a>
+        </q-item>
+        <div class="separator"/>
+        <q-item to="/other">
           <img alt="other_logo" height="30" src="icons/other.svg" width="32" />
           <span>AUTRES</span>
-        </a>
-        <div class="separator"></div>
-        <span
-          v-if="!meUser"
-          class="profil"
-          @click="
-            navBar =
-              navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-          "
-          >Veuillez vous connecter</span
-        >
-        <span
-          class="profil"
-          @click="
-            navBar =
-              navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-          "
-          v-else
-          >Bonjour {{ meUser.username }}</span
-        >
-        <ProfilWidget
-          v-if="meUser"
-          :user="meUser"
-          @click="
-            navBar =
-              navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-          "
-          class="profil-widget"
-        />
-        <q-avatar icon="person" />
+        </q-item>
+        <div class="separator"/>
+        </q-list>
+        <q-list             @click="
+              navBar =
+                navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
+            ">
+        <q-item-label v-if="meUser">Bonjour {{meUser.username}}</q-item-label>
+        <q-item-label v-else>Vous n'êtes pas connecté</q-item-label>
+        <q-avatar v-if="meUser" class="q-pa-sm" size="70px">
+          <img
+            alt="profil_logo"
+            :src="meUser.avatar_url"
+          />
+        </q-avatar>
+        </q-list>
       </nav>
-    </div>
+    </q-list>
 
     <q-page-container>
       <router-view />
@@ -141,6 +132,9 @@ div {
   height: 100px;
   transition: all 1s;
   bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   &.open {
     bottom: -50px;
@@ -212,12 +206,15 @@ nav {
 }
 
 @media (max-width: 1200px) {
+  .mobile-row {
+    flex-direction: column;
+    align-items: center;
+  }
   nav {
     flex-direction: column;
     min-width: 100px;
 
     .separator {
-      //display: none;
       width: 15vw;
       height: 1px;
     }
@@ -230,6 +227,8 @@ nav {
 
   .profil-bar {
     height: 250px;
+    display: flex;
+    flex-direction: column;
 
     &.open {
       bottom: -200px;
@@ -274,6 +273,7 @@ nav {
           opacity: 0.75;
           height: 1px;
           width: 40vw;
+
           transition:
             //height 1s ease-in-out,
             width 0.5s ease-in-out,
@@ -293,7 +293,7 @@ nav {
         }
         .separator {
           transition:
-            //height 1s ease-in-out,
+            height 1s ease-in-out,
             width 0.5s ease-in-out,
             opacity 0.5s ease-out;
         }
