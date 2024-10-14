@@ -118,6 +118,9 @@ const navigation_layout = ref('navigation_layout');
           <q-avatar v-if="meUser" class="q-pa-sm" size="70px">
             <img alt="profil_logo" :src="meUser.avatar_url" />
           </q-avatar>
+          <q-avatar v-else class="q-pa-sm" size="70px">
+            <img alt="profil_logo" src="icons/profil.svg" />
+          </q-avatar>
         </q-list>
       </nav>
     </q-list>
