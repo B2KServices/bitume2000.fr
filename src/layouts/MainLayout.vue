@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { UserModel } from 'src/models/user-model.ts';
 import { useUsersApi } from 'src/composables/users/useUsersApi.ts';
 import { ref } from 'vue';
@@ -11,7 +10,7 @@ defineOptions({
 
 const meUser = ref<UserModel>();
 const userApi = useUsersApi();
-const authApi = useAuthApi()
+const authApi = useAuthApi();
 
 userApi.getMe().then((user) => {
   meUser.value = user;
@@ -23,75 +22,102 @@ const navigation_layout = ref('navigation_layout');
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-list :class="navigation_layout">
-      <q-list v-if="!meUser" :class="[navBar]">
+      <q-list v-if="!meUser" :class="[navBar]" style="border-radius: 30px">
         <q-item to="/login">connexion</q-item>
       </q-list>
-      <q-list v-else :class="[navBar, 'q-px-lg']" style="border-radius: 30px" >
-        <q-item to="/profil" >Gérer le compte</q-item>
+      <q-list v-else :class="[navBar, 'q-px-lg']" style="border-radius: 30px">
+        <q-item to="/profil">Gérer le compte</q-item>
         <q-item to="/roles">Gérer les rôles</q-item>
         <q-item to="/achievements">Voir les achievements</q-item>
         <q-item to="/login" @click="authApi.logout()">Déconnexion</q-item>
       </q-list>
-      <nav >
+      <nav>
         <q-list>
-        <q-avatar size="150px">
-        <img
-          alt="logo"
-          src="logos/logo_2.svg"
-          @click="
-            navigation_layout =
-              navigation_layout == 'navigation_layout open'
-                ? 'navigation_layout'
-                : 'navigation_layout open'
-          "
-        />
-        </q-avatar>
+          <q-avatar size="150px">
+            <img
+              alt="logo"
+              src="logos/logo_2.svg"
+              @click="
+                navigation_layout =
+                  navigation_layout == 'navigation_layout open'
+                    ? 'navigation_layout'
+                    : 'navigation_layout open'
+              "
+            />
+          </q-avatar>
         </q-list>
         <q-list style="display: flex" class="mobile-row">
-        <div class="separator"/>
-        <q-item to="/">
-          <img alt="home_logo" height="30" src="icons/home.svg" width="32" />
-          <span>ACCUEIL</span>
-        </q-item>
-        <div class="separator"/>
-        <q-item to="/games">
-          <img alt="game_logo" height="30" src="icons/game.svg" width="32" />
-          <span>JEUX ET SERVEUR</span>
-        </q-item>
-        <div class="separator"/>
-        <q-item to="/art">
-          <img alt="art_logo" height="30" src="icons/art.svg" width="32" />
-          <span>ARTS</span>
-        </q-item>
-        <div class="separator"/>
-        <q-item to="/social">
-          <img
-            alt="social_logo"
-            height="30"
-            src="icons/social.svg"
-            width="32"
-          />
-          <span>SOCIAL</span>
-        </q-item>
-        <div class="separator"/>
-        <q-item to="/other">
-          <img alt="other_logo" height="30" src="icons/other.svg" width="32" />
-          <span>AUTRES</span>
-        </q-item>
-        <div class="separator"/>
+          <div class="separator" />
+          <router-link to="/">
+            <a>
+              <img
+                alt="home_logo"
+                height="30"
+                src="icons/home.svg"
+                width="32"
+              />
+              <span>ACCUEIL</span>
+            </a>
+          </router-link>
+          <div class="separator" />
+          <router-link to="/games">
+            <a>
+              <img
+                alt="game_logo"
+                height="30"
+                src="icons/game.svg"
+                width="32"
+              />
+              <span>JEUX ET SERVEUR</span>
+            </a>
+          </router-link>
+
+          <div class="separator" />
+          <router-link to="/art">
+            <a>
+              <img alt="art_logo" height="30" src="icons/art.svg" width="32" />
+              <span>ARTS</span>
+            </a>
+          </router-link>
+          <div class="separator" />
+          <router-link to="/social">
+            <a>
+              <img
+                alt="social_logo"
+                height="30"
+                src="icons/social.svg"
+                width="32"
+              />
+              <span>SOCIAL</span>
+            </a>
+          </router-link>
+          <div class="separator" />
+          <router-link to="/other">
+            <a>
+              <img
+                alt="other_logo"
+                height="30"
+                src="icons/other.svg"
+                width="32"
+              />
+              <span>AUTRES</span>
+            </a>
+          </router-link>
+          <div class="separator" />
         </q-list>
-        <q-list             @click="
-              navBar =
-                navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
-            ">
-        <q-item-label v-if="meUser">Bonjour {{meUser.username}}</q-item-label>
-        <q-item-label v-else>Vous n'êtes pas connecté</q-item-label>
-        <q-avatar v-if="meUser" class="q-pa-sm" size="70px">
-          <img
-            alt="profil_logo"
-            :src="meUser.avatar_url"
-          />
-        </q-avatar>
+        <q-list
+          @click="
+            navBar =
+              navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
+          "
+        >
+          <q-item-label v-if="meUser"
+            >Bonjour {{ meUser.username }}</q-item-label
+          >
+          <q-item-label v-else>Vous n'êtes pas connecté</q-item-label>
+          <q-avatar v-if="meUser" class="q-pa-sm" size="70px">
+            <img alt="profil_logo" :src="meUser.avatar_url" />
+          </q-avatar>
         </q-list>
       </nav>
     </q-list>
@@ -101,24 +127,24 @@ const navigation_layout = ref('navigation_layout');
     </q-page-container>
   </q-layout>
 </template>
-
 <style lang="scss" scoped>
+a {
+  text-decoration: none;
+}
+
 .navigation_layout {
   position: fixed;
   z-index: 1;
   width: 100%;
 }
 
-.profil:hover {
+.profil:hover,
+.profil-widget:hover {
   cursor: pointer;
 }
 
 div {
   position: relative;
-}
-
-.profil-widget:hover {
-  cursor: pointer;
 }
 
 .profil-widget {
@@ -142,17 +168,14 @@ div {
 
   a {
     text-align: end;
-    //font-family: Inter;
     font-size: 15px;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
     color: white;
     margin: 50px 0 0 0;
-  }
 
-  a:hover {
-    background: transparent;
+    &:hover {
+      background: transparent;
+    }
   }
 }
 
@@ -179,29 +202,25 @@ nav {
   span {
     text-align: center;
     font-size: 20px;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
     color: $dark;
-  }
 
-  & > span {
-    margin-left: 2em;
+    & > span {
+      margin-left: 2em;
+    }
   }
 
   a {
     flex-grow: 1;
     padding: 20px;
     text-align: center;
-    justify-content: center;
     display: flex;
     align-items: center;
     gap: 0.5em;
-    width: 100%;
-  }
 
-  a:hover {
-    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -210,6 +229,7 @@ nav {
     flex-direction: column;
     align-items: center;
   }
+
   nav {
     flex-direction: column;
     min-width: 100px;
@@ -227,7 +247,6 @@ nav {
 
   .profil-bar {
     height: 250px;
-    display: flex;
     flex-direction: column;
 
     &.open {
@@ -246,13 +265,13 @@ nav {
   }
 
   .navigation_layout {
-    img:active {
-      transform: scale(0.9);
-      transition: transform 0.1s;
-    }
-
     img {
       transition: transform 0.5s;
+
+      &:active {
+        transform: scale(0.9);
+        transition: transform 0.1s;
+      }
     }
 
     &:not(.open) {
@@ -263,21 +282,14 @@ nav {
           opacity: 0;
           padding: 0;
           margin: 0;
-          transition:
-            max-height 0.5s ease-out,
-            opacity 0.25s ease-out,
-            padding 0.5s ease-out,
-            margin 0.5s ease-out;
+          transition: max-height 0.5s ease-out, opacity 0.25s ease-out, padding 0.5s ease-out, margin 0.5s ease-out;
         }
+
         .separator {
           opacity: 0.75;
           height: 1px;
           width: 40vw;
-
-          transition:
-            //height 1s ease-in-out,
-            width 0.5s ease-in-out,
-            opacity 0.5s ease-out;
+          transition: width 0.5s ease-in-out, opacity 0.5s ease-out;
         }
       }
     }
@@ -285,17 +297,11 @@ nav {
     &.open {
       nav {
         a {
-          transition:
-            max-height 0.5s ease-out,
-            opacity 0.25s ease-out,
-            padding 0.5s ease-out,
-            margin 0.5s ease-out;
+          transition: max-height 0.5s ease-out, opacity 0.25s ease-out, padding 0.5s ease-out, margin 0.5s ease-out;
         }
+
         .separator {
-          transition:
-            height 1s ease-in-out,
-            width 0.5s ease-in-out,
-            opacity 0.5s ease-out;
+          transition: height 1s ease-in-out, width 0.5s ease-in-out, opacity 0.5s ease-out;
         }
       }
     }

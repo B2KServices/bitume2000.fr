@@ -63,23 +63,23 @@ async function connect() {
         <q-img src="logos/logo_2.svg" alt="logo" height="auto" width="200px" />
       </div>
       <q-item-section class="flex" style="gap: 32px">
-        <form  @submit.prevent="connect">
-        <q-input
-          v-model="pseudo"
-          label="Pseudo"
-          outlined
-          rounded
-          bg-color="white"
-        />
-        <q-input
-          v-if="!discord_connection"
-          v-model="password"
-          label="Mot de passe"
-          outlined
-          rounded
-          bg-color="white"
-          type="password"
-        />
+        <form @submit.prevent="connect">
+          <q-input
+            v-model="pseudo"
+            label="Pseudo"
+            outlined
+            rounded
+            bg-color="white"
+          />
+          <q-input
+            v-if="!discord_connection"
+            v-model="password"
+            label="Mot de passe"
+            outlined
+            rounded
+            bg-color="white"
+            type="password"
+          />
         </form>
       </q-item-section>
       <q-item-section class="flex" style="flex-direction: row; gap: 32px">
