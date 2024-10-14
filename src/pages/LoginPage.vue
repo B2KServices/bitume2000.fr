@@ -62,8 +62,8 @@ async function connect() {
       <div class="justify-center flex">
         <q-img src="logos/logo_2.svg" alt="logo" height="auto" width="200px" />
       </div>
-      <q-item-section class="flex" style="gap: 32px">
-        <form @submit.prevent="connect">
+      <form @submit.prevent="connect">
+        <q-item-section class="flex" style="gap: 32px">
           <q-input
             v-model="pseudo"
             label="Pseudo"
@@ -80,8 +80,8 @@ async function connect() {
             bg-color="white"
             type="password"
           />
-        </form>
-      </q-item-section>
+        </q-item-section>
+      </form>
       <q-item-section class="flex" style="flex-direction: row; gap: 32px">
         <q-btn
           @click="connect"

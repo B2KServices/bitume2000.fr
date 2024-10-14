@@ -282,14 +282,20 @@ nav {
           opacity: 0;
           padding: 0;
           margin: 0;
-          transition: max-height 0.5s ease-out, opacity 0.25s ease-out, padding 0.5s ease-out, margin 0.5s ease-out;
+          transition:
+            max-height 0.5s ease-out,
+            opacity 0.25s ease-out,
+            padding 0.5s ease-out,
+            margin 0.5s ease-out;
         }
 
         .separator {
           opacity: 0.75;
           height: 1px;
           width: 40vw;
-          transition: width 0.5s ease-in-out, opacity 0.5s ease-out;
+          transition:
+            width 0.5s ease-in-out,
+            opacity 0.5s ease-out;
         }
       }
     }
@@ -297,11 +303,18 @@ nav {
     &.open {
       nav {
         a {
-          transition: max-height 0.5s ease-out, opacity 0.25s ease-out, padding 0.5s ease-out, margin 0.5s ease-out;
+          transition:
+            max-height 0.5s ease-out,
+            opacity 0.25s ease-out,
+            padding 0.5s ease-out,
+            margin 0.5s ease-out;
         }
 
         .separator {
-          transition: height 1s ease-in-out, width 0.5s ease-in-out, opacity 0.5s ease-out;
+          transition:
+            height 1s ease-in-out,
+            width 0.5s ease-in-out,
+            opacity 0.5s ease-out;
         }
       }
     }
