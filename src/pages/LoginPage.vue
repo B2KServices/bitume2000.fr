@@ -62,30 +62,33 @@ async function connect() {
       <div class="justify-center flex">
         <q-img src="logos/logo_2.svg" alt="logo" height="auto" width="200px" />
       </div>
-      <q-item-section class="flex" style="gap: 32px">
-        <q-input
-          v-model="pseudo"
-          label="Pseudo"
-          outlined
-          rounded
-          bg-color="white"
-        />
-        <q-input
-          v-if="!discord_connection"
-          v-model="password"
-          label="Mot de passe"
-          outlined
-          rounded
-          bg-color="white"
-          type="password"
-        />
-      </q-item-section>
+      <form @submit.prevent="connect">
+        <q-item-section class="flex" style="gap: 32px">
+          <q-input
+            v-model="pseudo"
+            label="Pseudo"
+            outlined
+            rounded
+            bg-color="white"
+          />
+          <q-input
+            v-if="!discord_connection"
+            v-model="password"
+            label="Mot de passe"
+            outlined
+            rounded
+            bg-color="white"
+            type="password"
+          />
+        </q-item-section>
+      </form>
       <q-item-section class="flex" style="flex-direction: row; gap: 32px">
         <q-btn
           @click="connect"
           label="Se connecter"
           color="primary"
           :loading="chargement"
+          type="submit"
         />
         <q-btn
           @click="discord_connection = !discord_connection"

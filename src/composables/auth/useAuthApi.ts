@@ -17,5 +17,9 @@ export function useAuthApi() {
     });
   }
 
-  return { login, login_discord };
+  async function logout() {
+    return axios.$get<UserModel>('auth/logout');
+  }
+
+  return { login, login_discord, logout };
 }
