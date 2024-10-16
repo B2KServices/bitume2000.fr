@@ -1,0 +1,8 @@
+services:
+  frontend:
+    image: bitume2000.fr:frontend
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - 4000:4000
