@@ -22,13 +22,24 @@ const navigation_layout = ref('navigation_layout');
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-list :class="navigation_layout">
-      <q-list v-if="!meUser" :class="[navBar]" style="border-radius: 30px">
+      <q-list
+        v-if="!meUser"
+        :class="[navBar]"
+        class="flex justify-center"
+        style="border-radius: 30px"
+      >
         <q-item to="/login">connexion</q-item>
       </q-list>
-      <q-list v-else :class="[navBar, 'q-px-lg']" style="border-radius: 30px">
+      <q-list
+        v-else
+        :class="[navBar, 'q-px-lg']"
+        class="flex justify-between"
+        style="border-radius: 30px"
+      >
         <q-item to="/profil">Gérer le compte</q-item>
         <q-item to="/roles">Gérer les rôles</q-item>
         <q-item to="/achievements">Voir les achievements</q-item>
+        <q-item to="/admin" v-if="meUser.permission_level > 80">Admin</q-item>
         <q-item to="/login" @click="authApi.logout()">Déconnexion</q-item>
       </q-list>
       <nav>
@@ -110,8 +121,9 @@ const navigation_layout = ref('navigation_layout');
             navBar =
               navBar == 'profil-bar open' ? 'profil-bar' : 'profil-bar open'
           "
+          class="q-pa-sm justify-center flex column"
         >
-          <q-item-label v-if="meUser"
+          <q-item-label class="text-center" v-if="meUser"
             >Bonjour {{ meUser.username }}</q-item-label
           >
           <q-item-label v-else>Vous n'êtes pas connecté</q-item-label>
@@ -125,18 +137,23 @@ const navigation_layout = ref('navigation_layout');
       </nav>
     </q-list>
 
-    <q-page-container>
+    <q-page-container class="class-g" style="">
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 <style lang="scss" scoped>
+.class-g {
+  padding-top: 200px !important;
+  margin-left: 32px;
+  margin-right: 32px;
+}
+
 a {
   text-decoration: none;
 }
 
 .navigation_layout {
-  position: fixed;
   z-index: 1;
   width: 100%;
 }
@@ -162,7 +179,6 @@ div {
   transition: all 1s;
   bottom: 0;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   &.open {
@@ -249,11 +265,11 @@ nav {
   }
 
   .profil-bar {
-    height: 250px;
+    height: 300px;
     flex-direction: column;
 
     &.open {
-      bottom: -200px;
+      bottom: -250px;
     }
 
     a {

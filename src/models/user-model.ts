@@ -3,6 +3,7 @@ export type UserModel = {
   username: string;
   id_discord: string;
   avatar_url: string;
+  permission_level: number;
 };
 
 export type UserDTOModel = UserModel & {

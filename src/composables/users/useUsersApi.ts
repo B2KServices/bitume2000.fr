@@ -1,5 +1,5 @@
 import { useAxios } from 'boot/axios.ts';
-import { UserModel } from 'src/models/user-model.ts';
+import { UserDTOModel, UserModel } from 'src/models/user-model.ts';
 import { RoleModel } from 'src/models/role-model.ts';
 
 export function useUsersApi() {
@@ -9,7 +9,7 @@ export function useUsersApi() {
     return axios.$get<UserModel>('users/me');
   }
 
-  async function updateMe(data: UserModel) {
+  async function updateMe(data: Partial<UserDTOModel>) {
     return axios.$patch<UserModel>('users/me', data);
   }
 
@@ -27,10 +27,16 @@ export function useUsersApi() {
     });
   }
 
+  async function updateAvatar(avatar: File) {
+    const formData = new FormData();
+    formData.append('file', avatar);
+    return axios.$post<UserModel>('users/me/update-avatar', formData);
+  }
   return {
     getMe,
     updateMe,
     getMyRoles,
     updateMyRole,
+    updateAvatar,
   };
 }
