@@ -1,9 +1,5 @@
 <template>
-  <router-view />
+  <main>
+    <RouterView />
+  </main>
 </template>
-
-<script setup lang="ts">
-defineOptions({
-  name: 'App',
-});
-</script>
